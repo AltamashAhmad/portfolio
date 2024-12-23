@@ -3,22 +3,22 @@ import { motion } from 'framer-motion';
 function About() {
   const education = [
     {
-      degree: "Bachelor of Technology",
+      degree: "Bachelor of Technology (Computer Science)",
       institution: "Jamia Millia Islamia",
       year: "2020-24",
-      score: "8.71/10.0"
+      score: "8.71/10.0 CGPA"
     },
     {
       degree: "Class XII (CBSE)",
       institution: "Central Academy School, Kota",
-      year: "2018",
+      year: "2018-19",
       score: "77.2%"
     },
     {
       degree: "Class X (CISCE)",
       institution: "City Montessori School, Lucknow",
-      year: "2016",
-      score: "90.0%"
+      year: "2016-17",
+      score: "90%"
     }
   ];
 
@@ -26,114 +26,121 @@ function About() {
     {
       role: "Full Stack Software Developer",
       company: "Ekai",
-      period: "Sep'24-Present",
+      duration: "September 2023 - Present",
       points: [
-        "Developed Ekai, a custom LLM Slack bot using OpenAI API",
-        "Built backend functionalities using Node.js, Express.js",
-        "Implemented privacy control module for training data visibility",
-        "Designed custom Slack home interface with Block Kit Builder"
+        "Architected and developed a custom LLM Slack bot using OpenAI API, enabling intelligent ChatGPT-like interactions with advanced training capabilities",
+        "Implemented robust backend services using Node.js and Express.js, integrating Slack Bolt SDK for seamless bot interactions",
+        "Designed and implemented a sophisticated privacy control system for managing training data visibility",
+        "Engineered a custom markdown-to-Slack formatter ensuring optimal message rendering",
+        "Created an intuitive Slack home interface using Block Kit Builder, enhancing user experience",
+        "Integrated Google Picker API for efficient multi-file selection and processing from Google Drive"
       ]
     },
     {
       role: "Software Developer Intern",
       company: "Kalvium",
-      period: "June'24 - Sep'24",
+      duration: "June 2023 - September 2023",
       points: [
-        "Developed LiveBook using HTML, CSS, and JavaScript",
-        "Integrated YouTube videos via API for content delivery",
-        "Developed RESTful APIs for content management",
-        "Optimized platform performance using Chrome DevTools"
+        "Led the development of LiveBook, an interactive learning platform integrating multimedia content and assessments",
+        "Implemented YouTube API integration for seamless video content delivery",
+        "Developed comprehensive RESTful APIs for content management and user interactions",
+        "Optimized platform performance using Chrome DevTools, significantly improving load times and user experience"
       ]
     }
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      {/* Introduction */}
-      <motion.div
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      {/* Introduction Section */}
+      <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-16"
       >
-        <h1 className="text-4xl font-heading font-bold mb-6">About Me</h1>
-        <p className="text-lg text-gray-600 leading-relaxed">
-          I&apos;m a Full Stack Developer with a passion for building scalable web applications. 
-          With a strong foundation in computer science and impressive achievements including 
-          securing 96.8 percentile in JEE Mains, I bring both technical expertise and 
-          problem-solving skills to every project.
+        <h1 className="text-4xl font-heading font-bold text-gray-900 mb-6">
+          About Me
+        </h1>
+        <p className="text-lg text-gray-600 leading-relaxed mb-6">
+          I&apos;m a Full Stack Software Developer with expertise in building modern web applications 
+          and AI-powered solutions. Currently pursuing my B.Tech in Computer Science from 
+          Jamia Millia Islamia, I bring hands-on experience in developing scalable applications 
+          using cutting-edge technologies.
         </p>
-      </motion.div>
+        <p className="text-lg text-gray-600 leading-relaxed">
+          My technical expertise includes Node.js, React, Express.js, and various APIs including 
+          OpenAI and Google Cloud. I&apos;m passionate about creating efficient, user-centric 
+          solutions and have a proven track record of delivering high-quality software products.
+        </p>
+      </motion.section>
 
-      {/* Experience */}
+      {/* Experience Section */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         className="mb-16"
       >
-        <h2 className="text-2xl font-heading font-bold mb-6">Professional Experience</h2>
-        <div className="space-y-8">
+        <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
+          Professional Experience
+        </h2>
+        <div className="space-y-6">
           {experience.map((exp, index) => (
-            <div key={index} className="border-l-4 border-primary pl-4">
-              <h3 className="font-heading font-bold text-xl">{exp.role}</h3>
-              <p className="text-primary mb-2">{exp.company} | {exp.period}</p>
-              <ul className="list-disc list-inside space-y-2 text-gray-600">
-                {exp.points.map((point, i) => (
-                  <li key={i}>{point}</li>
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100"
+            >
+              <div className="flex flex-wrap justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
+                  <p className="text-gray-600">{exp.company}</p>
+                </div>
+                <p className="text-gray-500 text-sm">{exp.duration}</p>
+              </div>
+              <ul className="space-y-2">
+                {exp.points.map((point, idx) => (
+                  <li key={idx} className="flex items-start text-gray-600">
+                    <span className="text-primary mr-2 mt-1.5">•</span>
+                    <span className="flex-1">{point}</span>
+                  </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </motion.section>
 
-      {/* Education */}
+      {/* Education Section */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mb-16"
       >
-        <h2 className="text-2xl font-heading font-bold mb-6">Education</h2>
+        <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
+          Education
+        </h2>
         <div className="grid gap-6">
           {education.map((edu, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="font-heading font-bold text-lg">{edu.degree}</h3>
-              <p className="text-primary">{edu.institution}</p>
-              <div className="flex justify-between mt-2 text-gray-600">
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100"
+            >
+              <h3 className="text-xl font-bold text-primary mb-2">
+                {edu.degree}
+              </h3>
+              <p className="text-gray-600 mb-2">{edu.institution}</p>
+              <div className="flex justify-between text-gray-500 text-sm">
                 <span>{edu.year}</span>
                 <span>{edu.score}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </motion.section>
-
-      {/* Achievements */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
-        <h2 className="text-2xl font-heading font-bold mb-6">Achievements</h2>
-        <ul className="space-y-4 text-gray-600">
-          <li className="flex items-start">
-            <span className="text-primary mr-2">•</span>
-            Secured 96.8 percentile in 2019 Joint Entrance Exam (JEE Mains)
-          </li>
-          <li className="flex items-start">
-            <span className="text-primary mr-2">•</span>
-            Skilled coder on LeetCode and Codeforces platforms
-          </li>
-          <li className="flex items-start">
-            <span className="text-primary mr-2">•</span>
-            Resolved 900+ student queries on Chegg platform
-          </li>
-          <li className="flex items-start">
-            <span className="text-primary mr-2">•</span>
-            Built Zod Gaming YouTube channel with 1500 subscribers and 500K views
-          </li>
-        </ul>
       </motion.section>
     </div>
   );

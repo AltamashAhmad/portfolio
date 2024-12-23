@@ -99,8 +99,12 @@ function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="mt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto md:mx-0"
+                className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto md:mx-0"
               >
+                <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
+                  <h3 className="text-3xl font-bold text-primary">7+</h3>
+                  <p className="text-gray-600 mt-1 text-sm">Months Experience</p>
+                </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
                   <h3 className="text-3xl font-bold text-primary">200+</h3>
                   <p className="text-gray-600 mt-1 text-sm">LeetCode Problems</p>
