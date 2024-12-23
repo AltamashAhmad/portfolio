@@ -102,16 +102,16 @@ function Home() {
                 className="mt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto md:mx-0"
               >
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">96.8</h3>
-                  <p className="text-gray-600 mt-1 text-sm">JEE Percentile</p>
+                  <h3 className="text-3xl font-bold text-primary">200+</h3>
+                  <p className="text-gray-600 mt-1 text-sm">LeetCode Problems</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">900+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">Queries Resolved</p>
+                  <h3 className="text-3xl font-bold text-primary">500+</h3>
+                  <p className="text-gray-600 mt-1 text-sm">DSA Problems</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">500K+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">YouTube Views</p>
+                  <h3 className="text-3xl font-bold text-primary">10+</h3>
+                  <p className="text-gray-600 mt-1 text-sm">Projects Built</p>
                 </div>
               </motion.div>
             </div>
