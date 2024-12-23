@@ -12,6 +12,16 @@ function Home() {
     });
   };
 
+  const downloadCV = () => {
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = '/Altamash_Ahmad_CV.pdf'; // Make sure this matches your CV file name
+    link.download = 'Altamash_Ahmad_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center bg-gradient-to-b from-gray-50 to-white">
@@ -60,6 +70,26 @@ function Home() {
                     className="border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
                   >
                     Contact Me
+                  </button>
+                  <button 
+                    onClick={downloadCV}
+                    className="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2"
+                  >
+                    <span>Download CV</span>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-5 w-5" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
+                      />
+                    </svg>
                   </button>
                 </div>
               </motion.div>
