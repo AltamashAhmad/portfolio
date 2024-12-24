@@ -11,10 +11,9 @@ function Projects() {
       type: "backend",
       tech: ["Node.js", "Express.js", "Redis", "RESTful API"],
       duration: "May'24 - Jul'24",
-      image: "/projectImage/Rate_Limiter.webp",
+      image: "/projectImage/ratelimiter.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
-        live: "#"
       }
     },
     {
@@ -23,10 +22,9 @@ function Projects() {
       type: "fullstack",
       tech: ["HTML", "CSS", "JavaScript", "RESTful API"],
       duration: "Feb'24 - Apr'24",
-      image: "/projectImage/Shine_Traders.webp",
+      image: "/projectImage/shinetraders.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Shine_Trader",
-        live: "https://shine-trader.vercel.app/"
       }
     },
     {
@@ -35,10 +33,9 @@ function Projects() {
       type: "frontend",
       tech: ["JavaScript", "CSS", "Algorithms"],
       duration: "May'24 - Jul'24",
-      image: "/sorting.png",
+      image: "/projectImage/sortingvisualizer.webp",
       links: {
         github: null,
-        live: "#"
       }
     },
     {
@@ -47,10 +44,9 @@ function Projects() {
       type: "frontend",
       tech: ["HTML", "CSS", "JavaScript", "Game Development"],
       duration: "2024",
-      image: "/rps-game.png",
+      image: "/projectImage/rps.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rock-Paper-Scissors",
-        live: "https://rock-paper-scissors-altamash.vercel.app/"
       }
     },
     {
@@ -59,10 +55,9 @@ function Projects() {
       type: "fullstack",
       tech: ["HTML", "CSS", "JavaScript", "RESTful API", "YouTube API"],
       duration: "June'24 - Sep'24",
-      image: "/kalvium-livebook.png",
+      image: "/projectImage/kalvium.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Kalvium_Livebook",
-        live: "https://kalvium-livebook.vercel.app/"
       }
     }
   ];
@@ -112,7 +107,7 @@ function Projects() {
       {/* Projects Grid */}
       <motion.div 
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <AnimatePresence>
           {filteredProjects.map((project) => (
@@ -123,12 +118,17 @@ function Projects() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden"
+              className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
             >
-              {/* Project Image */}
-              <div className="h-48 bg-gray-200 relative overflow-hidden group">
+              {/* Project Image - Updated styles */}
+              <div className="relative w-full aspect-video overflow-hidden group">
+                <img 
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 flex items-center justify-center bg-primary/80 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     {project.links.github && (
                       <a 
                         href={project.links.github} 
@@ -144,11 +144,11 @@ function Projects() {
               </div>
 
               {/* Project Info */}
-              <div className="p-6">
+              <div className="p-6 flex-1 flex flex-col">
                 <h3 className="font-heading font-bold text-xl mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-gray-600 mb-4 line-clamp-3 flex-1">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
