@@ -44,7 +44,7 @@ function Home() {
                 </h2>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 mb-4">
                   Hi, I&apos;m{' '}
-                  <span className="text-primary">Altamash Ahmad</span>
+                  <span className="text-primary">Javeria Afzal</span>
                 </h1>
                 
                 <p className="text-xl text-gray-600 mb-8 max-w-2xl">

@@ -11,7 +11,7 @@ function Projects() {
       type: "backend",
       tech: ["Node.js", "Express.js", "Redis", "RESTful API"],
       duration: "May'24 - Jul'24",
-      image: "/rate-limiter.png",
+      image: "/projectImage/Rate_Limiter.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
         live: "#"
@@ -23,7 +23,7 @@ function Projects() {
       type: "fullstack",
       tech: ["HTML", "CSS", "JavaScript", "RESTful API"],
       duration: "Feb'24 - Apr'24",
-      image: "/ecommerce.png",
+      image: "/projectImage/Shine_Traders.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Shine_Trader",
         live: "https://shine-trader.vercel.app/"
