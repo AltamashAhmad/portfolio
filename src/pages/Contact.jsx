@@ -5,7 +5,6 @@ function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: ''
   });
 
@@ -38,13 +37,7 @@ function Contact() {
       icon: "📧"
     },
     {
-      title: "Phone",
-      value: "+91 9648031331",
-      link: "tel:+919648031331",
-      icon: "📞"
-    },
-    {
-      title: "WhatsApp",
+      title: "WhatsApp/Phone",
       value: "+91 9648031331",
       link: "https://wa.me/919648031331",
       icon: "💬"
@@ -114,22 +107,6 @@ function Contact() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
-
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                Subject
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </div>
-
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                 Message
