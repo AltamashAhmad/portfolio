@@ -6,24 +6,24 @@ function Skills() {
       title: "Programming Languages",
       skills: [
         { name: "C++", level: "75%" },
-        { name: "Java", level: "65%" },
+        { name: "Java", level: "85%" },
         { name: "JavaScript", level: "70%" },
       ]
     },
     {
       title: "Computer Science",
       skills: [
-        { name: "Data Structures", level: "70%" },
-        { name: "Algorithms", level: "65%" },
-        { name: "OOPS", level: "75%" },
+        { name: "Data Structures", level: "85%" },
+        { name: "Algorithms", level: "80%" },
+        { name: "OOPS", level: "90%" },
       ]
     },
     {
       title: "Web Development",
       skills: [
         { name: "React.js", level: "60%" },
-        { name: "Node.js", level: "65%" },
-        { name: "Express.js", level: "70%" },
+        { name: "Node.js", level: "75%" },
+        {name:"Spring Boot", level:"55%"}
       ]
     },
     {
