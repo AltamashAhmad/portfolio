@@ -1,9 +1,37 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 import Skills from '../components/Skills';
 
 function Home() {
   const navigate = useNavigate();
+  
+  // Calculate total experience in months
+  const calculateTotalExperience = useMemo(() => {
+    // Ekai experience (September 2024 to present)
+    const ekaiStart = new Date(2024, 8, 1); // September 2024
+    const ekaiEnd = new Date(); // Present
+    
+    // Kalvium experience (June 2023 to September 2023)
+    const kalviumStart = new Date(2023, 5, 1); // June 2023
+    const kalviumEnd = new Date(2023, 8, 1); // September 2023
+    
+    // Calculate months for each experience
+    let ekaiMonths = 0;
+    // Only count Ekai experience if the start date is in the past
+    if (ekaiStart <= ekaiEnd) {
+      ekaiMonths = (ekaiEnd.getFullYear() - ekaiStart.getFullYear()) * 12 + 
+                  (ekaiEnd.getMonth() - ekaiStart.getMonth());
+    }
+    
+    const kalviumMonths = (kalviumEnd.getFullYear() - kalviumStart.getFullYear()) * 12 + 
+                         (kalviumEnd.getMonth() - kalviumStart.getMonth());
+    
+    // Total experience in months
+    const totalMonths = ekaiMonths + kalviumMonths;
+    
+    return totalMonths;
+  }, []);
   
   const scrollToSkills = () => {
     document.getElementById('skills').scrollIntoView({ 
@@ -102,7 +130,7 @@ function Home() {
                 className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto md:mx-0"
               >
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">7+</h3>
+                  <h3 className="text-3xl font-bold text-primary">{calculateTotalExperience}+</h3>
                   <p className="text-gray-600 mt-1 text-sm">Months Experience</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">

@@ -26,7 +26,7 @@ function About() {
     {
       role: "Full Stack Software Developer",
       company: "Ekai",
-      startDate: new Date(2023, 8, 1), // September 2023 (months are 0-indexed)
+      startDate: new Date(2024, 8, 1), // September 2024 (months are 0-indexed)
       endDate: null, // null indicates present
       points: [
         "Architected and developed a custom LLM Slack bot using OpenAI API, enabling ChatGPT-like interactions with advanced training capabilities.",
