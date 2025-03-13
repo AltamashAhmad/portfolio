@@ -3,11 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
 import Skills from '../components/Skills';
 import { fetchLeetCodeStats } from '../utils/leetcodeStats';
+import { fetchGitHubStats } from '../utils/githubStats';
 
 function Home() {
   const navigate = useNavigate();
   const [leetCodeStats, setLeetCodeStats] = useState({
     totalSolved: 200, // Default value until API responds
+    loading: true
+  });
+  
+  const [githubStats, setGithubStats] = useState({
+    publicRepos: 10, // Default value until API responds
     loading: true
   });
   
@@ -34,6 +40,31 @@ function Home() {
     };
     
     getLeetCodeStats();
+  }, []);
+  
+  // Fetch GitHub stats
+  useEffect(() => {
+    const getGitHubStats = async () => {
+      try {
+        setGithubStats(prev => ({ ...prev, loading: true }));
+        const stats = await fetchGitHubStats('AltamashAhmad');
+        setGithubStats({
+          publicRepos: stats.publicRepos,
+          lastUpdated: stats.timestamp ? new Date(stats.timestamp) : new Date(),
+          loading: false,
+          success: stats.success
+        });
+      } catch (error) {
+        console.error('Error in getGitHubStats:', error);
+        setGithubStats(prev => ({ 
+          ...prev, 
+          loading: false,
+          success: false
+        }));
+      }
+    };
+    
+    getGitHubStats();
   }, []);
   
   // Calculate total experience in months
@@ -185,8 +216,21 @@ function Home() {
                   <p className="text-gray-600 mt-1 text-sm">DSA Problems</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">10+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">Projects Built</p>
+                  <h3 className="text-3xl font-bold text-primary">
+                    {githubStats.loading ? (
+                      <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                    ) : (
+                      `${githubStats.publicRepos}+`
+                    )}
+                  </h3>
+                  <div className="relative group">
+                    <p className="text-gray-600 mt-1 text-sm">Projects Built</p>
+                    {githubStats.lastUpdated && (
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        Last updated: {githubStats.lastUpdated.toLocaleString()}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             </div>
