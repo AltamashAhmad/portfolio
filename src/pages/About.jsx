@@ -26,7 +26,8 @@ function About() {
     {
       role: "Full Stack Software Developer",
       company: "Ekai",
-      duration: "September 2023 - Present",
+      startDate: new Date(2023, 8, 1), // September 2023 (months are 0-indexed)
+      endDate: null, // null indicates present
       points: [
         "Architected and developed a custom LLM Slack bot using OpenAI API, enabling ChatGPT-like interactions with advanced training capabilities.",
         "Implemented robust backend services using Node.js and Express.js, integrating Slack Bolt SDK for seamless bot interactions.",
@@ -39,7 +40,8 @@ function About() {
     {
       role: "Software Developer Intern",
       company: "Kalvium",
-      duration: "June 2023 - September 2023",
+      startDate: new Date(2023, 5, 1), // June 2023
+      endDate: new Date(2023, 8, 1), // September 2023
       points: [
         "Led the development of LiveBook, an interactive learning platform integrating multimedia content and assessments.",
         "Implemented YouTube API integration for seamless video content delivery.",
@@ -48,6 +50,40 @@ function About() {
       ],
     },
   ];
+
+  // Function to calculate duration between two dates
+  const calculateDuration = (startDate, endDate) => {
+    const end = endDate || new Date(); // Use current date if endDate is null (present)
+    
+    const monthsDiff = (end.getFullYear() - startDate.getFullYear()) * 12 + 
+                       (end.getMonth() - startDate.getMonth());
+    
+    const years = Math.floor(monthsDiff / 12);
+    const months = monthsDiff % 12;
+    
+    let duration = '';
+    
+    if (years > 0) {
+      duration += `${years} year${years > 1 ? 's' : ''}`;
+      if (months > 0) duration += ` ${months} month${months > 1 ? 's' : ''}`;
+    } else {
+      duration += `${months} month${months > 1 ? 's' : ''}`;
+    }
+    
+    return duration;
+  };
+
+  // Function to format date to Month Year format
+  const formatDate = (date) => {
+    if (!date) return 'Present';
+    
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    
+    return `${months[date.getMonth()]} ${date.getFullYear()}`;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -94,7 +130,14 @@ function About() {
                   <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
                   <p className="text-gray-600">{exp.company}</p>
                 </div>
-                <p className="text-gray-500 text-sm">{exp.duration}</p>
+                <div className="text-right">
+                  <p className="text-gray-700 font-medium">
+                    {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    ({calculateDuration(exp.startDate, exp.endDate)})
+                  </p>
+                </div>
               </div>
               <ul className="space-y-2">
                 {exp.points.map((point, idx) => (

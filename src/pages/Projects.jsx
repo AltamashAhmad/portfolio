@@ -4,13 +4,53 @@ import { motion, AnimatePresence } from 'framer-motion';
 function Projects() {
   const [filter, setFilter] = useState('all');
 
+  // Function to calculate duration between two dates
+  const calculateDuration = (startDate, endDate) => {
+    const start = startDate instanceof Date ? startDate : new Date(startDate);
+    const end = endDate instanceof Date ? endDate : (endDate ? new Date(endDate) : new Date());
+    
+    const monthsDiff = (end.getFullYear() - start.getFullYear()) * 12 + 
+                       (end.getMonth() - start.getMonth());
+    
+    const years = Math.floor(monthsDiff / 12);
+    const months = monthsDiff % 12;
+    
+    let duration = '';
+    
+    if (years > 0) {
+      duration += `${years} year${years > 1 ? 's' : ''}`;
+      if (months > 0) duration += ` ${months} month${months > 1 ? 's' : ''}`;
+    } else {
+      duration += `${months} month${months > 1 ? 's' : ''}`;
+    }
+    
+    return duration;
+  };
+
+  // Function to format date to Month'YY format
+  const formatDate = (date) => {
+    if (!date) return 'Present';
+    
+    const dateObj = date instanceof Date ? date : new Date(date);
+    const month = dateObj.toLocaleString('default', { month: 'short' });
+    const year = dateObj.getFullYear().toString().slice(2);
+    
+    return `${month}'${year}`;
+  };
+
+  // Function to format date range
+  const formatDateRange = (startDate, endDate) => {
+    return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+  };
+
   const projects = [
     {
       title: "Rate Limiter for API Services",
       description: "Developed RESTful API with Node.js/Express.js for social media analytics, including submission and dashboard endpoints. Built Redis-based data persistence layer for user submissions, hashtag tracking, and sentiment analysis.",
       type: "backend",
       tech: ["Node.js", "Express.js", "Redis", "RESTful API"],
-      duration: "May'24 - Jul'24",
+      startDate: "2024-05-01",
+      endDate: "2024-07-31",
       image: "/projectImage/ratelimiter.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
@@ -21,7 +61,8 @@ function Projects() {
       description: "Developed a responsive e-commerce platform using HTML, CSS, and JavaScript. Integrated dynamic product list with RESTful API and implemented persistent shopping cart feature with local storage.",
       type: "fullstack",
       tech: ["HTML", "CSS", "JavaScript", "RESTful API"],
-      duration: "Feb'24 - Apr'24",
+      startDate: "2024-02-01",
+      endDate: "2024-04-30",
       image: "/projectImage/shinetraders.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Shine_Trader",
@@ -32,7 +73,8 @@ function Projects() {
       description: "Developed a web-based sorting visualizer for multiple sorting algorithms. Enhanced animation performance and designed an interactive UI for customizing array size and sorting speed.",
       type: "frontend",
       tech: ["JavaScript", "CSS", "Algorithms"],
-      duration: "May'24 - Jul'24",
+      startDate: "2024-05-01",
+      endDate: "2024-07-31",
       image: "/projectImage/sortingvisualizer.webp",
       links: {
         github: null,
@@ -43,7 +85,8 @@ function Projects() {
       description: "Interactive web-based Rock Paper Scissors game with modern UI, animations, and score tracking. Features responsive design and engaging user experience.",
       type: "frontend",
       tech: ["HTML", "CSS", "JavaScript", "Game Development"],
-      duration: "2024",
+      startDate: "2024-01-01",
+      endDate: "2024-03-31",
       image: "/projectImage/rps.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rock-Paper-Scissors",
@@ -54,7 +97,8 @@ function Projects() {
       description: "Developed LiveBook for Kalvium, an interactive learning platform integrating theory, videos, and assessments. Features YouTube API integration and RESTful APIs for content management.",
       type: "fullstack",
       tech: ["HTML", "CSS", "JavaScript", "RESTful API", "YouTube API"],
-      duration: "June'24 - Sep'24",
+      startDate: "2024-06-01",
+      endDate: "2024-09-30",
       image: "/projectImage/kalvium.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Kalvium_Livebook",
@@ -162,7 +206,7 @@ function Projects() {
                   ))}
                 </div>
                 <p className="text-sm text-gray-500">
-                  {project.duration}
+                  {formatDateRange(project.startDate, project.endDate)}
                 </p>
               </div>
             </motion.div>
