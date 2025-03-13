@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaGraduationCap, FaBriefcase, FaAward, FaUserTie } from 'react-icons/fa';
+import { FaGraduationCap, FaBriefcase, FaAward } from 'react-icons/fa';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 
 function About() {
@@ -106,10 +106,12 @@ function About() {
             <div className="relative w-48 h-48 mx-auto">
               <div className="absolute inset-0 bg-primary/20 rounded-full transform -rotate-6"></div>
               <div className="absolute inset-0 bg-white rounded-full transform rotate-3 overflow-hidden">
-                {/* Replace with your actual profile image */}
-                <div className="w-full h-full bg-gray-300 flex items-center justify-center text-3xl text-gray-500">
-                  <FaUserTie />
-                </div>
+                {/* Use the same profile image as the home page */}
+                <img
+                  src="/profile.jpg"
+                  alt="Altamash Ahmad"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
           </div>
