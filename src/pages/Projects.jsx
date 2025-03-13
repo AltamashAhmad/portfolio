@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 function Projects() {
   const [filter, setFilter] = useState('all');
@@ -46,62 +47,67 @@ function Projects() {
   const projects = [
     {
       title: "Rate Limiter for API Services",
-      description: "Developed RESTful API with Node.js/Express.js for social media analytics, including submission and dashboard endpoints. Built Redis-based data persistence layer for user submissions, hashtag tracking, and sentiment analysis.",
+      description: "Engineered a scalable rate limiting system for high-traffic APIs using the token bucket algorithm and Redis. Prevents API abuse while ensuring service availability for legitimate users.",
       type: "backend",
-      tech: ["Node.js", "Express.js", "Redis", "RESTful API"],
-      startDate: "2024-05-01",
-      endDate: "2024-07-31",
+      tech: ["Node.js", "Express.js", "Redis", "Docker", "RESTful API"],
+      startDate: "2023-11-01",
+      endDate: "2023-12-15",
       image: "/projectImage/ratelimiter.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
+        live: null
       }
     },
     {
-      title: "E-commerce Platform (Shine Traders)",
-      description: "Developed a responsive e-commerce platform using HTML, CSS, and JavaScript. Integrated dynamic product list with RESTful API and implemented persistent shopping cart feature with local storage.",
+      title: "E-commerce Platform",
+      description: "Built a responsive e-commerce platform with product catalog, shopping cart, and secure checkout. Features include user authentication, payment processing, and order management.",
       type: "fullstack",
-      tech: ["HTML", "CSS", "JavaScript", "RESTful API"],
-      startDate: "2024-02-01",
-      endDate: "2024-04-30",
+      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "CSS"],
+      startDate: "2023-08-01",
+      endDate: "2023-10-30",
       image: "/projectImage/shinetraders.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Shine_Trader",
+        live: null
       }
     },
     {
       title: "Sorting Visualizer",
-      description: "Developed a web-based sorting visualizer for multiple sorting algorithms. Enhanced animation performance and designed an interactive UI for customizing array size and sorting speed.",
+      description: "Created an interactive tool that visualizes sorting algorithms in action. Users can adjust array size and speed to compare performance of different algorithms in real-time.",
       type: "frontend",
-      tech: ["JavaScript", "CSS", "Algorithms"],
-      startDate: "2024-05-01",
-      endDate: "2024-07-31",
+      tech: ["JavaScript", "HTML5", "CSS3", "Data Structures", "Algorithms"],
+      startDate: "2023-06-01",
+      endDate: "2023-07-15",
       image: "/projectImage/sortingvisualizer.webp",
       links: {
         github: null,
+        live: null
       }
     },
     {
       title: "Rock-Paper-Scissors Game",
-      description: "Interactive web-based Rock Paper Scissors game with modern UI, animations, and score tracking. Features responsive design and engaging user experience.",
+      description: "Developed an interactive Rock-Paper-Scissors game with modern UI and animations. Features include score tracking, game history, and responsive design for all devices.",
       type: "frontend",
-      tech: ["HTML", "CSS", "JavaScript", "Game Development"],
-      startDate: "2024-01-01",
-      endDate: "2024-03-31",
+      tech: ["HTML5", "CSS3", "JavaScript", "LocalStorage", "Responsive Design"],
+      startDate: "2023-04-01",
+      endDate: "2023-05-15",
       image: "/projectImage/rps.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Rock-Paper-Scissors",
+        live: null
       }
     },
     {
-      title: "Kalvium Livebook",
-      description: "Developed LiveBook for Kalvium, an interactive learning platform integrating theory, videos, and assessments. Features YouTube API integration and RESTful APIs for content management.",
+      title: "Kalvium LiveBook Platform",
+      description: "Built an interactive learning platform during my internship at Kalvium. Implemented content delivery, progress tracking, and assessment modules with YouTube API integration.",
       type: "fullstack",
-      tech: ["HTML", "CSS", "JavaScript", "RESTful API", "YouTube API"],
-      startDate: "2024-06-01",
-      endDate: "2024-09-30",
-      image: "/projectImage/kalvium.webp",
+      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "YouTube API", "RESTful API"],
+      startDate: "2023-06-01",
+      endDate: "2023-09-01",
+      image: "/projectImage/Kalvium.webp",
       links: {
         github: "https://github.com/AltamashAhmad/Kalvium_Livebook",
+        live: null
       }
     }
   ];
@@ -125,22 +131,22 @@ function Projects() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-12"
       >
-        <h1 className="text-4xl font-heading font-bold mb-4">My Projects</h1>
+        <h1 className="text-4xl font-heading font-bold mb-4">Featured Projects</h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          A collection of my work showcasing my skills in frontend, backend, and full-stack development.
+          A showcase of my technical expertise and problem-solving abilities through real-world applications. Each project demonstrates my skills in different areas of software development.
         </p>
       </motion.div>
 
       {/* Filters */}
-      <div className="flex justify-center gap-4 mb-12">
+      <div className="flex justify-center flex-wrap gap-3 mb-12">
         {filters.map(({ label, value }) => (
           <button
             key={value}
             onClick={() => setFilter(value)}
-            className={`px-4 py-2 rounded-full transition-colors ${
+            className={`px-5 py-2 rounded-full transition-all ${
               filter === value 
-                ? 'bg-primary text-white' 
-                : 'bg-gray-100 hover:bg-gray-200'
+                ? 'bg-primary text-white shadow-md' 
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
             }`}
           >
             {label}
@@ -151,7 +157,7 @@ function Projects() {
       {/* Projects Grid */}
       <motion.div 
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <AnimatePresence>
           {filteredProjects.map((project) => (
@@ -162,57 +168,92 @@ function Projects() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
+              className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full border border-gray-100 hover:shadow-xl transition-shadow"
             >
-              {/* Project Image - Updated styles */}
-              <div className="relative w-full aspect-video overflow-hidden group">
+              {/* Project Image */}
+              <div className="relative w-full aspect-video overflow-hidden">
                 <img 
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-primary/80 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="flex flex-col sm:flex-row gap-4">
+                <div className="absolute top-0 right-0 bg-primary/90 text-white px-3 py-1 text-xs font-medium">
+                  {project.type === 'frontend' ? 'Frontend' : 
+                   project.type === 'backend' ? 'Backend' : 'Full Stack'}
+                </div>
+              </div>
+
+              {/* Project Info */}
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-heading font-bold text-xl mb-2 text-gray-800">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tech.map(tech => (
+                      <span 
+                        key={tech}
+                        className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <p className="text-sm text-gray-500">
+                    {formatDateRange(project.startDate, project.endDate)}
+                  </p>
+                  <div className="flex gap-2">
                     {project.links.github && (
                       <a 
                         href={project.links.github} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="px-4 py-2 bg-white text-primary rounded-full hover:bg-gray-100"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors text-sm"
                       >
-                        View Code
+                        <FaGithub className="text-sm" />
+                        <span>Code</span>
+                      </a>
+                    )}
+                    {project.links.live && (
+                      <a 
+                        href={project.links.live} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors text-sm"
+                      >
+                        <FaExternalLinkAlt className="text-xs" />
+                        <span>Demo</span>
                       </a>
                     )}
                   </div>
                 </div>
               </div>
-
-              {/* Project Info */}
-              <div className="p-6 flex-1 flex flex-col">
-                <h3 className="font-heading font-bold text-xl mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3 flex-1">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map(tech => (
-                    <span 
-                      key={tech}
-                      className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-500">
-                  {formatDateRange(project.startDate, project.endDate)}
-                </p>
-              </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
+      
+      {/* No Projects Found Message */}
+      {filteredProjects.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
+          <p className="text-gray-500 text-lg">No projects found for this filter.</p>
+          <button 
+            onClick={() => setFilter('all')}
+            className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          >
+            View All Projects
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 }
