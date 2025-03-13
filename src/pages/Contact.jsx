@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,16 +11,35 @@ function Contact() {
 
   const [status, setStatus] = useState('');
 
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
     
-    // Here you would typically send the form data to your backend
-    // For now, we'll just simulate a submission
-    setTimeout(() => {
+    try {
+      // Send email with parameters matching the template variables
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          email: formData.email, // Add this to ensure email is included
+          name: formData.name,   // Add this to ensure name is included
+        }
+      );
+
       setStatus('sent');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setStatus('error');
+    }
   };
 
   const handleChange = (e) => {
@@ -87,7 +107,16 @@ function Contact() {
                 className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6"
               >
                 <p className="font-medium">Thank you for your message!</p>
-                <p className="text-sm">I'll get back to you as soon as possible.</p>
+                <p className="text-sm">I&apos;ll get back to you as soon as possible.</p>
+              </motion.div>
+            ) : status === 'error' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6"
+              >
+                <p className="font-medium">Oops! Something went wrong.</p>
+                <p className="text-sm">Please try again or contact me directly via email.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -109,7 +138,7 @@ function Contact() {
                 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
+                    Your Email Address (for replies)
                   </label>
                   <input
                     type="email"
@@ -119,7 +148,7 @@ function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                    placeholder="john@example.com"
+                    placeholder="Your email address (so I can reply to you)"
                   />
                 </div>
                 
