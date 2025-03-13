@@ -1,10 +1,40 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Skills from '../components/Skills';
+import { fetchLeetCodeStats } from '../utils/leetcodeStats';
 
 function Home() {
   const navigate = useNavigate();
+  const [leetCodeStats, setLeetCodeStats] = useState({
+    totalSolved: 200, // Default value until API responds
+    loading: true
+  });
+  
+  // Fetch LeetCode stats
+  useEffect(() => {
+    const getLeetCodeStats = async () => {
+      try {
+        setLeetCodeStats(prev => ({ ...prev, loading: true }));
+        const stats = await fetchLeetCodeStats('altamash_96');
+        setLeetCodeStats({
+          totalSolved: stats.totalSolved,
+          lastUpdated: stats.timestamp ? new Date(stats.timestamp) : new Date(),
+          loading: false,
+          success: stats.success
+        });
+      } catch (error) {
+        console.error('Error in getLeetCodeStats:', error);
+        setLeetCodeStats(prev => ({ 
+          ...prev, 
+          loading: false,
+          success: false
+        }));
+      }
+    };
+    
+    getLeetCodeStats();
+  }, []);
   
   // Calculate total experience in months
   const calculateTotalExperience = useMemo(() => {
@@ -134,8 +164,21 @@ function Home() {
                   <p className="text-gray-600 mt-1 text-sm">Months Experience</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-3xl font-bold text-primary">200+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">LeetCode Problems</p>
+                  <h3 className="text-3xl font-bold text-primary">
+                    {leetCodeStats.loading ? (
+                      <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                    ) : (
+                      `${leetCodeStats.totalSolved}+`
+                    )}
+                  </h3>
+                  <div className="relative group">
+                    <p className="text-gray-600 mt-1 text-sm">LeetCode Problems</p>
+                    {leetCodeStats.lastUpdated && (
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        Last updated: {leetCodeStats.lastUpdated.toLocaleString()}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
                   <h3 className="text-3xl font-bold text-primary">500+</h3>
