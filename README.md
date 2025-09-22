@@ -1,31 +1,36 @@
 # Altamash Ahmad - Portfolio
 
-A modern, responsive portfolio website built with React, Vite, and Tailwind CSS.
+A modern, single-page responsive portfolio website built with React, Vite, and Tailwind CSS featuring smooth scrolling navigation and interactive animations.
 
 ## 🚀 Features
 
-- Responsive design that works on all devices
-- Modern UI with smooth animations using Framer Motion
-- Project showcase with filtering capabilities
-- Interactive contact form
-- Detailed about section with experience and education history
-- Optimized performance
+- **Single-Page Design**: Seamless scrolling experience with smooth navigation between sections
+- **Active Navigation Indicators**: Dynamic navbar highlighting current section
+- **Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
+- **Modern UI/UX**: Clean design with smooth animations using Framer Motion
+- **Interactive Contact Form**: Working contact form with EmailJS integration
+- **Real-time Stats**: Live GitHub and LeetCode statistics with API integration
+- **Project Showcase**: Filterable project gallery with detailed descriptions
+- **Scroll-to-Top Button**: Convenient navigation enhancement
+- **Performance Optimized**: Fast loading with Vite build optimization
 
 ## 🛠️ Technologies Used
 
-- **Frontend Framework**: React.js
-- **Build Tool**: Vite
+- **Frontend Framework**: React.js 18
+- **Build Tool**: Vite 6.0
 - **Styling**: Tailwind CSS
-- **Routing**: React Router
 - **Animations**: Framer Motion
 - **Icons**: React Icons
+- **Email Service**: EmailJS
+- **APIs**: GitHub REST API, LeetCode Stats API
 
-## 📋 Pages
+## � Sections
 
-- **Home**: Introduction and overview
-- **About**: Personal background, experience, and education
-- **Projects**: Showcase of development projects
-- **Contact**: Contact form and information
+- **Hero**: Introduction with dynamic stats and call-to-action buttons
+- **Skills**: Technical skills showcase with categorization
+- **About**: Professional experience, education, and achievements
+- **Projects**: Featured projects with filtering and live demos
+- **Contact**: Contact form with multiple communication channels
 
 ## 🏃‍♂️ Getting Started
 

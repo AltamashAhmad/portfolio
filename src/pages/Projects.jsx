@@ -47,68 +47,60 @@ function Projects() {
   const projects = [
     {
       title: "Rate Limiter for API Services",
-      description: "Engineered a scalable rate limiting system for high-traffic APIs using the token bucket algorithm and Redis. Prevents API abuse while ensuring service availability for legitimate users.",
+      description: "Enterprise-grade rate limiting system using Redis and Node.js with tiered user access, sentiment analysis, and real-time analytics dashboard. Supports 10k+ concurrent users with 40ms response times.",
       type: "backend",
-      tech: ["Node.js", "Express.js", "Redis", "Docker", "RESTful API"],
+      tech: ["Node.js", "Express.js", "Redis", "Natural", "JWT", "RESTful API"],
       startDate: "2023-11-01",
       endDate: "2023-12-15",
-      image: "/projectImage/ratelimiter.webp",
+      image: "/projectImage/ratelimiter.png",
       links: {
         github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
         live: null
-      }
+      },
+      highlights: [
+        "Built scalable rate limiting with Redis token bucket algorithm",
+        "Implemented sentiment analysis and hashtag extraction features", 
+        "Created comprehensive testing suite with 95% code coverage",
+        "Supports Free (10/min), Standard (50/min), Premium (200/min) tiers"
+      ]
     },
     {
-      title: "E-commerce Platform",
-      description: "Built a responsive e-commerce platform with product catalog, shopping cart, and secure checkout. Features include user authentication, payment processing, and order management.",
+      title: "Property Listing System",
+      description: "Full-stack real estate platform with advanced search, favorites, recommendations, and Redis caching. Features JWT authentication, MongoDB integration, and comprehensive API documentation.",
+      type: "fullstack", 
+      tech: ["TypeScript", "Node.js", "MongoDB", "Redis", "JWT", "Express.js"],
+      startDate: "2024-01-01",
+      endDate: "2024-03-15",
+      image: "/projectImage/property.png",
+      links: {
+        github: "https://github.com/AltamashAhmad/Property-Listing-System",
+        live: null
+      },
+      highlights: [
+        "Built property search with 15+ filter options and pagination",
+        "Implemented favorites & recommendation system between users",
+        "Added Redis caching reducing response times by 60%",
+        "Comprehensive REST API with detailed documentation"
+      ]
+    },
+    {
+      title: "AI Chat Application",
+      description: "Real-time chat application with AI integration using Ollama/Gemma, Firebase authentication, and Firestore. Features message editing, markdown rendering, and modern responsive UI.",
       type: "fullstack",
-      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "CSS"],
-      startDate: "2023-08-01",
-      endDate: "2023-10-30",
-      image: "/projectImage/shinetraders.webp",
+      tech: ["React", "TypeScript", "Firebase", "Ollama", "Chakra UI", "Node.js"],
+      startDate: "2024-06-01", 
+      endDate: "2024-08-30",
+      image: "/projectImage/Ai.png",
       links: {
-        github: "https://github.com/AltamashAhmad/Shine_Trader",
+        github: "https://github.com/AltamashAhmad/AI-CHAT-APP",
         live: null
-      }
-    },
-    {
-      title: "Sorting Visualizer",
-      description: "Created an interactive tool that visualizes sorting algorithms in action. Users can adjust array size and speed to compare performance of different algorithms in real-time.",
-      type: "frontend",
-      tech: ["JavaScript", "HTML5", "CSS3", "Data Structures", "Algorithms"],
-      startDate: "2023-06-01",
-      endDate: "2023-07-15",
-      image: "/projectImage/sortingvisualizer.webp",
-      links: {
-        github: null,
-        live: null
-      }
-    },
-    {
-      title: "Rock-Paper-Scissors Game",
-      description: "Developed an interactive Rock-Paper-Scissors game with modern UI and animations. Features include score tracking, game history, and responsive design for all devices.",
-      type: "frontend",
-      tech: ["HTML5", "CSS3", "JavaScript", "LocalStorage", "Responsive Design"],
-      startDate: "2023-04-01",
-      endDate: "2023-05-15",
-      image: "/projectImage/rps.webp",
-      links: {
-        github: "https://github.com/AltamashAhmad/Rock-Paper-Scissors",
-        live: null
-      }
-    },
-    {
-      title: "Kalvium LiveBook Platform",
-      description: "Built an interactive learning platform during my internship at Kalvium. Implemented content delivery, progress tracking, and assessment modules with YouTube API integration.",
-      type: "fullstack",
-      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "YouTube API", "RESTful API"],
-      startDate: "2023-06-01",
-      endDate: "2023-09-01",
-      image: "/projectImage/Kalvium.webp",
-      links: {
-        github: "https://github.com/AltamashAhmad/Kalvium_Livebook",
-        live: null
-      }
+      },
+      highlights: [
+        "Integrated local AI model (Gemma 3B) via Ollama API",
+        "Real-time messaging with Firebase Firestore sync",
+        "Advanced markdown rendering with code syntax highlighting", 
+        "Responsive design with dark/light theme support"
+      ]
     }
   ];
 
@@ -124,16 +116,17 @@ function Projects() {
     : projects.filter(project => project.type === filter);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <section id="projects" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-200">
+      <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-12"
       >
-        <h1 className="text-4xl font-heading font-bold mb-4">Featured Projects</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          A showcase of my technical expertise and problem-solving abilities through real-world applications. Each project demonstrates my skills in different areas of software development.
+        <h1 className="text-4xl font-heading font-bold mb-4 text-gray-900 dark:text-white">Top Projects</h1>
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          My most impactful projects showcasing full-stack development, system design, and modern technologies. Each project demonstrates scalability, performance optimization, and real-world problem solving.
         </p>
       </motion.div>
 
@@ -146,7 +139,7 @@ function Projects() {
             className={`px-5 py-2 rounded-full transition-all ${
               filter === value 
                 ? 'bg-primary text-white shadow-md' 
-                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600'
             }`}
           >
             {label}
@@ -168,7 +161,7 @@ function Projects() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full border border-gray-100 hover:shadow-xl transition-shadow"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-700 overflow-hidden flex flex-col h-full border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-600 transition-shadow"
             >
               {/* Project Image */}
               <div className="relative w-full aspect-video overflow-hidden">
@@ -186,25 +179,41 @@ function Projects() {
               {/* Project Info */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-heading font-bold text-xl mb-2 text-gray-800">
+                  <h3 className="font-heading font-bold text-xl mb-2 text-gray-800 dark:text-white">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {project.description}
                   </p>
+                  
+                  {/* Key Highlights */}
+                  {project.highlights && (
+                    <div className="mb-4">
+                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Key Achievements:</h4>
+                      <ul className="space-y-1">
+                        {project.highlights.slice(0, 3).map((highlight, index) => (
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tech.map(tech => (
                       <span 
                         key={tech}
-                        className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium"
+                        className="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full text-xs font-medium"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <p className="text-sm text-gray-500">
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     {formatDateRange(project.startDate, project.endDate)}
                   </p>
                   <div className="flex gap-2">
@@ -213,7 +222,7 @@ function Projects() {
                         href={project.links.github} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors text-sm"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-800 dark:bg-gray-600 text-white rounded-md hover:bg-gray-700 dark:hover:bg-gray-500 transition-colors text-sm"
                       >
                         <FaGithub className="text-sm" />
                         <span>Code</span>
@@ -245,7 +254,7 @@ function Projects() {
           animate={{ opacity: 1 }}
           className="text-center py-12"
         >
-          <p className="text-gray-500 text-lg">No projects found for this filter.</p>
+          <p className="text-gray-500 dark:text-gray-400 text-lg">No projects found for this filter.</p>
           <button 
             onClick={() => setFilter('all')}
             className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
@@ -254,7 +263,8 @@ function Projects() {
           </button>
         </motion.div>
       )}
-    </div>
+      </div>
+    </section>
   );
 }
 

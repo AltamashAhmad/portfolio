@@ -1,12 +1,9 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
-import Skills from '../components/Skills';
 import { fetchLeetCodeStats } from '../utils/leetcodeStats';
 import { fetchGitHubStats } from '../utils/githubStats';
 
 function Home() {
-  const navigate = useNavigate();
   const [leetCodeStats, setLeetCodeStats] = useState({
     totalSolved: 200, // Default value until API responds
     loading: true
@@ -17,7 +14,23 @@ function Home() {
     loading: true
   });
   
-  // Fetch LeetCode stats
+  // Smooth scroll functions for different sections
+  const scrollToSection = (sectionId) => {
+    const element = document.querySelector(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+  
+  const scrollToSkills = () => {
+    document.getElementById('skills').scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
   useEffect(() => {
     const getLeetCodeStats = async () => {
       try {
@@ -67,15 +80,19 @@ function Home() {
     getGitHubStats();
   }, []);
   
-  // Calculate total experience in months
+  // Calculate total experience in years
   const calculateTotalExperience = useMemo(() => {
-    // Ekai experience (September 2024 to present)
-    const ekaiStart = new Date(2024, 8, 1); // September 2024
+    // Ekai experience (June 2024 to present)
+    const ekaiStart = new Date(2024, 5, 1); // June 2024
     const ekaiEnd = new Date(); // Present
     
-    // Kalvium experience (June 2023 to September 2023)
-    const kalviumStart = new Date(2023, 5, 1); // June 2023
-    const kalviumEnd = new Date(2023, 8, 1); // September 2023
+    // Quvor experience (July 2023 to March 2024)
+    const quvorStart = new Date(2023, 6, 1); // July 2023
+    const quvorEnd = new Date(2024, 2, 1); // March 2024
+    
+    // Kalvium experience (December 2022 to March 2023)
+    const kalviumStart = new Date(2022, 11, 1); // December 2022
+    const kalviumEnd = new Date(2023, 2, 1); // March 2023
     
     // Calculate months for each experience
     let ekaiMonths = 0;
@@ -85,21 +102,20 @@ function Home() {
                   (ekaiEnd.getMonth() - ekaiStart.getMonth());
     }
     
+    const quvorMonths = (quvorEnd.getFullYear() - quvorStart.getFullYear()) * 12 + 
+                       (quvorEnd.getMonth() - quvorStart.getMonth());
+    
     const kalviumMonths = (kalviumEnd.getFullYear() - kalviumStart.getFullYear()) * 12 + 
                          (kalviumEnd.getMonth() - kalviumStart.getMonth());
     
     // Total experience in months
-    const totalMonths = ekaiMonths + kalviumMonths;
+    const totalMonths = ekaiMonths + quvorMonths + kalviumMonths;
     
-    return totalMonths;
+    // Convert to years (rounded to 1 decimal place)
+    const totalYears = Math.round((totalMonths / 12) * 10) / 10;
+    
+    return totalYears;
   }, []);
-  
-  const scrollToSkills = () => {
-    document.getElementById('skills').scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  };
 
   const downloadCV = () => {
     // Create a link element
@@ -112,13 +128,13 @@ function Home() {
   };
 
   return (
-    <>
-      <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center bg-gradient-to-b from-gray-50 to-white">
+    <section id="home">
+      <div className="min-h-screen flex flex-col justify-center bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 pt-8 transition-colors duration-200">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
         >
           <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
             {/* Text Content */}
@@ -129,40 +145,41 @@ function Home() {
                 transition={{ delay: 0.2 }}
               >
                 <h2 className="text-primary font-medium text-lg mb-2">
-                  Welcome to my portfolio
+                  Welcome to my Portfolio
                 </h2>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 mb-4">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-200">
                   Hi, I&apos;m{' '}
                   <span className="text-primary">Altamash Ahmad</span>
                 </h1>
                 
-                <p className="text-xl text-gray-600 mb-8 max-w-2xl">
-                  Full Stack Software Developer specializing in building scalable web applications
-                  with modern technologies.
+                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl transition-colors duration-200">
+                  <span className="font-semibold">Full Stack Software Developer</span> specializing in modern web technologies and scalable applications. 
+                  Built production systems with <span className="font-semibold text-primary">React, Node.js</span>, and cloud technologies. Experienced in <span className="font-semibold text-primary">AI integrations</span>, 
+                  database optimization, and delivering high-performance solutions.
                 </p>
 
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                   <button 
-                    onClick={() => navigate('/projects')}
+                    onClick={() => scrollToSection('#projects')}
                     className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
                   >
                     View Projects
                   </button>
                   <button 
                     onClick={scrollToSkills}
-                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
+                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white dark:bg-transparent dark:text-primary dark:border-primary dark:hover:bg-primary dark:hover:text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
                   >
                     Technical Skills
                   </button>
                   <button 
-                    onClick={() => navigate('/contact')}
-                    className="border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
+                    onClick={() => scrollToSection('#contact')}
+                    className="border-2 border-primary bg-white dark:bg-gray-800 text-primary dark:text-primary hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
                   >
                     Contact Me
                   </button>
                   <button 
                     onClick={downloadCV}
-                    className="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2"
+                    className="bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2"
                   >
                     <span>Download CV</span>
                     <svg 
@@ -190,11 +207,11 @@ function Home() {
                 transition={{ delay: 0.4 }}
                 className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto md:mx-0"
               >
-                <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
+                <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">{calculateTotalExperience}+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">Months Experience</p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">Years Experience</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
+                <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">
                     {leetCodeStats.loading ? (
                       <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
@@ -203,19 +220,19 @@ function Home() {
                     )}
                   </h3>
                   <div className="relative group">
-                    <p className="text-gray-600 mt-1 text-sm">LeetCode Problems</p>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">LeetCode Problems</p>
                     {leetCodeStats.lastUpdated && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                         Last updated: {leetCodeStats.lastUpdated.toLocaleString()}
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
+                <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">500+</h3>
-                  <p className="text-gray-600 mt-1 text-sm">DSA Problems</p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">DSA Problems</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
+                <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">
                     {githubStats.loading ? (
                       <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
@@ -224,9 +241,9 @@ function Home() {
                     )}
                   </h3>
                   <div className="relative group">
-                    <p className="text-gray-600 mt-1 text-sm">Projects Built</p>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">Projects Built</p>
                     {githubStats.lastUpdated && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                         Last updated: {githubStats.lastUpdated.toLocaleString()}
                       </div>
                     )}
@@ -255,9 +272,7 @@ function Home() {
           </div>
         </motion.div>
       </div>
-
-      <Skills />
-    </>
+    </section>
   );
 }
 
