@@ -47,7 +47,7 @@ function Projects() {
   const projects = [
     {
       title: "Rate Limiter for API Services",
-      description: "Enterprise-grade rate limiting system using Redis and Node.js with tiered user access, sentiment analysis, and real-time analytics dashboard. Supports 10k+ concurrent users with 40ms response times.",
+      description: "Developed a scalable RESTful API using Node.js and Express.js to process social media data and deliver analytics insights.",
       type: "backend",
       tech: ["Node.js", "Express.js", "Redis", "Natural", "JWT", "RESTful API"],
       startDate: "2023-11-01",
@@ -58,10 +58,10 @@ function Projects() {
         live: null
       },
       highlights: [
-        "Built scalable rate limiting with Redis token bucket algorithm",
-        "Implemented sentiment analysis and hashtag extraction features", 
-        "Created comprehensive testing suite with 95% code coverage",
-        "Supports Free (10/min), Standard (50/min), Premium (200/min) tiers"
+        "Designed a high-speed data storage system with Redis to efficiently store user submissions, hashtags, and sentiment",
+        "Implemented tier-based rate limiting in Redis (free/premium/standard) to control API usage and prevent abuse", 
+        "Developed an error-handling system with Winston logging, reducing debugging time by 30%",
+        "Applied Low-Level Design (LLD) principles for modular and scalable system architecture"
       ]
     },
     {
@@ -84,10 +84,10 @@ function Projects() {
       ]
     },
     {
-      title: "AI Chat Application",
-      description: "Real-time chat application with AI integration using Ollama/Gemma, Firebase authentication, and Firestore. Features message editing, markdown rendering, and modern responsive UI.",
+      title: "AI-Powered Peer Mock Interview Platform",
+      description: "Built a full-stack mock interview platform simulating DSA, System Design, and LLD interviews with LLMs like Ollama/OpenAI.",
       type: "fullstack",
-      tech: ["React", "TypeScript", "Firebase", "Ollama", "Chakra UI", "Node.js"],
+      tech: ["React", "Firebase", "Ollama", "OpenAI", "Anthropic", "Node.js"],
       startDate: "2024-06-01", 
       endDate: "2024-08-30",
       image: "/projectImage/Ai.png",
@@ -96,10 +96,9 @@ function Projects() {
         live: null
       },
       highlights: [
-        "Integrated local AI model (Gemma 3B) via Ollama API",
-        "Real-time messaging with Firebase Firestore sync",
-        "Advanced markdown rendering with code syntax highlighting", 
-        "Responsive design with dark/light theme support"
+        "Built React frontend with Firebase Auth and protected routes for secure user sessions and dashboard access",
+        "Designed modular LLM backend using factory pattern for easy integration of LLMs (OpenAI, Ollama, Anthropic)",
+        "Created responsive chat interface with markdown rendering, code highlighting, and real-time message sync"
       ]
     }
   ];

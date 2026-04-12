@@ -59,8 +59,8 @@ function Contact() {
     },
     {
       title: "WhatsApp",
-      value: "+91 9648031331",
-      link: "https://wa.me/919648031331?text=Hi%20Altamash!%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20opportunities.",
+      value: "+971 568408658",
+      link: "https://wa.me/971568408658?text=Hi%20Altamash!%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20opportunities.",
       icon: "💬",
       description: "Quick chat & instant response"
     },

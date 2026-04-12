@@ -1,17 +1,36 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useMemo, useState, useEffect } from 'react';
 import { fetchLeetCodeStats } from '../utils/leetcodeStats';
 import { fetchGitHubStats } from '../utils/githubStats';
 
+// Animated count-up number — starts from 0, smoothly counts to target
+function CountUp({ target, duration = 1.2 }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.floor(v));
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    const controls = animate(count, target, {
+      duration,
+      ease: 'easeOut',
+    });
+    const unsub = rounded.on('change', (v) => setDisplay(v));
+    return () => { controls.stop(); unsub(); };
+  }, [target]);
+
+  return <span>{display}+</span>;
+}
+
 function Home() {
+  // Start with fallback values immediately — no loading spinner ever shown
   const [leetCodeStats, setLeetCodeStats] = useState({
-    totalSolved: 200, // Default value until API responds
-    loading: true
+    totalSolved: 300,
+    loading: false
   });
   
   const [githubStats, setGithubStats] = useState({
-    publicRepos: 10, // Default value until API responds
-    loading: true
+    publicRepos: 10,
+    loading: false
   });
   
   // Smooth scroll functions for different sections
@@ -34,7 +53,6 @@ function Home() {
   useEffect(() => {
     const getLeetCodeStats = async () => {
       try {
-        setLeetCodeStats(prev => ({ ...prev, loading: true }));
         const stats = await fetchLeetCodeStats('altamash_96');
         setLeetCodeStats({
           totalSolved: stats.totalSolved,
@@ -42,16 +60,8 @@ function Home() {
           loading: false,
           success: stats.success
         });
-      } catch (error) {
-        console.error('Error in getLeetCodeStats:', error);
-        setLeetCodeStats(prev => ({ 
-          ...prev, 
-          loading: false,
-          success: false
-        }));
-      }
+      } catch {}
     };
-    
     getLeetCodeStats();
   }, []);
   
@@ -59,7 +69,6 @@ function Home() {
   useEffect(() => {
     const getGitHubStats = async () => {
       try {
-        setGithubStats(prev => ({ ...prev, loading: true }));
         const stats = await fetchGitHubStats('AltamashAhmad');
         setGithubStats({
           publicRepos: stats.publicRepos,
@@ -67,24 +76,20 @@ function Home() {
           loading: false,
           success: stats.success
         });
-      } catch (error) {
-        console.error('Error in getGitHubStats:', error);
-        setGithubStats(prev => ({ 
-          ...prev, 
-          loading: false,
-          success: false
-        }));
-      }
+      } catch {}
     };
-    
     getGitHubStats();
   }, []);
   
   // Calculate total experience in years
   const calculateTotalExperience = useMemo(() => {
-    // Ekai experience (June 2024 to present)
+    // Zylo experience (Sep 2025 to present)
+    const zyloStart = new Date(2025, 8, 1); // September 2025
+    const zyloEnd = new Date(); // Present
+
+    // Ekai experience (June 2024 to Aug 2025)
     const ekaiStart = new Date(2024, 5, 1); // June 2024
-    const ekaiEnd = new Date(); // Present
+    const ekaiEnd = new Date(2025, 7, 1); // August 2025
     
     // Quvor experience (July 2023 to March 2024)
     const quvorStart = new Date(2023, 6, 1); // July 2023
@@ -95,8 +100,13 @@ function Home() {
     const kalviumEnd = new Date(2023, 2, 1); // March 2023
     
     // Calculate months for each experience
+    let zyloMonths = 0;
+    if (zyloStart <= zyloEnd) {
+      zyloMonths = (zyloEnd.getFullYear() - zyloStart.getFullYear()) * 12 + 
+                  (zyloEnd.getMonth() - zyloStart.getMonth());
+    }
+
     let ekaiMonths = 0;
-    // Only count Ekai experience if the start date is in the past
     if (ekaiStart <= ekaiEnd) {
       ekaiMonths = (ekaiEnd.getFullYear() - ekaiStart.getFullYear()) * 12 + 
                   (ekaiEnd.getMonth() - ekaiStart.getMonth());
@@ -109,7 +119,7 @@ function Home() {
                          (kalviumEnd.getMonth() - kalviumStart.getMonth());
     
     // Total experience in months
-    const totalMonths = ekaiMonths + quvorMonths + kalviumMonths;
+    const totalMonths = zyloMonths + ekaiMonths + quvorMonths + kalviumMonths;
     
     // Convert to years (rounded to 1 decimal place)
     const totalYears = Math.round((totalMonths / 12) * 10) / 10;
@@ -120,8 +130,8 @@ function Home() {
   const downloadCV = () => {
     // Create a link element
     const link = document.createElement('a');
-    link.href = '/Altamash_Ahmad_CV.pdf'; // Make sure this matches your CV file name
-    link.download = 'Altamash_Ahmad_CV.pdf';
+    link.href = '/Altamash_Ahmad_Resume_2024.pdf'; // Make sure this matches your CV file name
+    link.download = 'Altamash_Ahmad_Resume_2024.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -208,16 +218,14 @@ function Home() {
                 className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto md:mx-0"
               >
                 <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
-                  <h3 className="text-3xl font-bold text-primary">{calculateTotalExperience}+</h3>
+                  <h3 className="text-3xl font-bold text-primary">
+                    <CountUp target={calculateTotalExperience} duration={1} />
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">Years Experience</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">
-                    {leetCodeStats.loading ? (
-                      <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
-                    ) : (
-                      `${leetCodeStats.totalSolved}+`
-                    )}
+                    <CountUp target={leetCodeStats.totalSolved} />
                   </h3>
                   <div className="relative group">
                     <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">LeetCode Problems</p>
@@ -229,16 +237,12 @@ function Home() {
                   </div>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
-                  <h3 className="text-3xl font-bold text-primary">500+</h3>
+                  <h3 className="text-3xl font-bold text-primary"><CountUp target={500} /></h3>
                   <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">DSA Problems</p>
                 </div>
                 <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">
-                    {githubStats.loading ? (
-                      <span className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
-                    ) : (
-                      `${githubStats.publicRepos}+`
-                    )}
+                    <CountUp target={githubStats.publicRepos} />
                   </h3>
                   <div className="relative group">
                     <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">Projects Built</p>

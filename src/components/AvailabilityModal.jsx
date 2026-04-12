@@ -28,7 +28,7 @@ function AvailabilityModal() {
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent("Hi Altamash! I found your portfolio and would like to discuss opportunities.");
-    const phoneNumber = "919648031331"; // Updated with correct WhatsApp number
+    const phoneNumber = "971568408658"; // UAE number
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 

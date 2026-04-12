@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { 
   FaReact, FaNodeJs, FaJava, FaDatabase, FaCode, 
@@ -7,7 +7,9 @@ import {
 import { 
   SiSpringboot, SiMysql, SiMongodb, SiRedis, 
   SiTailwindcss, SiExpress, SiCplusplus, SiTypescript,
-  SiMantine, SiDirectus, SiSwagger, SiOpenai, SiSlack
+  SiMantine, SiDirectus, SiSwagger, SiOpenai, SiSlack,
+  SiNestjs, SiPostgresql, SiFirebase, SiPrisma, SiJquery,
+  SiBootstrap, SiHtml5, SiCss3, SiJest
 } from 'react-icons/si';
 import { TbBrandNextjs } from 'react-icons/tb';
 import { BsCodeSlash, BsGearFill } from 'react-icons/bs';
@@ -189,6 +191,108 @@ function Skills() {
       category: "cs",
       icon: <FaServer className="text-teal-600" />,
     },
+    {
+      name: "HTML5",
+      level: 90,
+      category: "frontend",
+      icon: <SiHtml5 className="text-orange-600" />,
+    },
+    {
+      name: "CSS3",
+      level: 85,
+      category: "frontend",
+      icon: <SiCss3 className="text-blue-600" />,
+    },
+    {
+      name: "jQuery",
+      level: 70,
+      category: "frontend",
+      icon: <SiJquery className="text-blue-500" />,
+    },
+    {
+      name: "Bootstrap",
+      level: 80,
+      category: "frontend",
+      icon: <SiBootstrap className="text-purple-600" />,
+    },
+    {
+      name: "NestJS",
+      level: 80,
+      category: "backend",
+      icon: <SiNestjs className="text-red-600" />,
+    },
+    {
+      name: "REST APIs",
+      level: 90,
+      category: "backend",
+      icon: <FaServer className="text-gray-600" />,
+    },
+    {
+      name: "Prisma ORM",
+      level: 85,
+      category: "database",
+      icon: <SiPrisma className="text-blue-800" />,
+    },
+    {
+      name: "PostgreSQL",
+      level: 85,
+      category: "database",
+      icon: <SiPostgresql className="text-blue-700" />,
+    },
+    {
+      name: "Firebase",
+      level: 80,
+      category: "devops",
+      icon: <SiFirebase className="text-yellow-500" />,
+    },
+    {
+      name: "CI/CD",
+      level: 80,
+      category: "devops",
+      icon: <BsGearFill className="text-blue-500" />,
+    },
+    {
+      name: "Jest",
+      level: 75,
+      category: "devops",
+      icon: <SiJest className="text-red-700" />,
+    },
+    {
+      name: "LLMs",
+      level: 80,
+      category: "cs",
+      icon: <SiOpenai className="text-black" />,
+    },
+    {
+      name: "Microservices",
+      level: 85,
+      category: "cs",
+      icon: <FaServer className="text-blue-600" />,
+    },
+    {
+      name: "LLD",
+      level: 85,
+      category: "cs",
+      icon: <FaCode className="text-gray-800" />,
+    },
+    {
+      name: "Design Patterns",
+      level: 85,
+      category: "cs",
+      icon: <BsCodeSlash className="text-teal-600" />,
+    },
+    {
+      name: "MVC",
+      level: 85,
+      category: "cs",
+      icon: <FaServer className="text-indigo-600" />,
+    },
+    {
+      name: "OAuth2",
+      level: 80,
+      category: "cs",
+      icon: <FaDatabase className="text-gray-600" />,
+    },
   ];
   
   // Filter skills based on category
@@ -196,10 +300,11 @@ function Skills() {
     ? skillsData 
     : skillsData.filter(skill => skill.category === activeCategory);
   
-  // Further filter based on showAllSkills toggle
-  const filteredSkills = showAllSkills 
-    ? categoryFilteredSkills 
-    : categoryFilteredSkills.filter(skill => coreSkillNames.includes(skill.name));
+  // Only apply "core skills only" filter when viewing ALL skills.
+  // When a specific category is selected, always show every skill in that category.
+  const filteredSkills = (activeCategory === 'all' && !showAllSkills)
+    ? categoryFilteredSkills.filter(skill => coreSkillNames.includes(skill.name))
+    : categoryFilteredSkills;
   
   const getLevelColor = (level) => {
     if (level >= 85) return 'bg-green-500';
@@ -248,19 +353,17 @@ function Skills() {
         </div>
 
         {/* Skills Grid - Mobile: 2 per row, Desktop: 3-4 per row */}
-        <motion.div 
-          layout
-          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto"
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto">
+          <AnimatePresence mode="popLayout">
           {filteredSkills.map((skill, index) => (
             <motion.div
               key={skill.name}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="bg-white dark:bg-gray-700 rounded-lg shadow-md dark:shadow-gray-600 p-3 sm:p-5 hover:shadow-lg dark:hover:shadow-gray-500 transition-all border border-gray-100 dark:border-gray-600"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25, delay: Math.min(index * 0.03, 0.35) }}
+              whileHover={{ y: -4, transition: { duration: 0.15 } }}
+              className="bg-white dark:bg-gray-700 rounded-lg shadow-md dark:shadow-gray-600 p-3 sm:p-5 hover:shadow-lg dark:hover:shadow-gray-500 transition-shadow border border-gray-100 dark:border-gray-600"
             >
               <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <div className="text-xl sm:text-2xl">{skill.icon}</div>
@@ -278,14 +381,16 @@ function Skills() {
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: Math.min(index * 0.02, 0.25) }}
                     className={`h-full rounded-full ${getLevelColor(skill.level)}`}
                   />
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Show More/Less Toggle */}
         {activeCategory === 'all' && (

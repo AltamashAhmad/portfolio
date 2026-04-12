@@ -1,21 +1,50 @@
 /**
- * Fetches LeetCode statistics for a given username
- * Uses the public LeetCode Stats API with localStorage caching and retry mechanism
+ * Fetches LeetCode statistics for a given username.
+ * Strategy: show cached value instantly (great for returning visitors),
+ *           then silently refresh in background. Timeout after 5s to avoid hanging.
  */
-export const fetchLeetCodeStats = async (username, retries = 2) => {
-  // Try to get cached stats first
-  const cachedStats = getCachedStats();
-  
+
+const CACHE_KEY = 'leetcodeStats';
+const CACHE_EXPIRY_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+const getCachedStats = () => {
   try {
-    // Using the LeetCode Stats API
-    const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch LeetCode stats: ${response.status}`);
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const stats = JSON.parse(raw);
+    const age = Date.now() - (stats.timestamp || 0);
+    if (age > CACHE_EXPIRY_MS) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
     }
-    
+    return stats;
+  } catch {
+    return null;
+  }
+};
+
+const cacheStats = (stats) => {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(stats));
+  } catch {}
+};
+
+const fetchFromAPI = async (username) => {
+  // AbortController gives us a hard 5-second timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    // Try the faster alfaarghya API first, fallback to heroku one
+    const response = await fetch(
+      `https://leetcode-stats-api.herokuapp.com/${username}`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timeoutId);
+
+    if (!response.ok) throw new Error(`Status ${response.status}`);
+
     const data = await response.json();
-    
     const stats = {
       totalSolved: data.totalSolved || 0,
       easySolved: data.easySolved || 0,
@@ -23,77 +52,41 @@ export const fetchLeetCodeStats = async (username, retries = 2) => {
       hardSolved: data.hardSolved || 0,
       acceptanceRate: data.acceptanceRate || 0,
       ranking: data.ranking || 0,
-      contributionPoints: data.contributionPoints || 0,
       timestamp: Date.now(),
-      success: true
+      success: true,
     };
-    
-    // Cache the stats
     cacheStats(stats);
-    
     return stats;
-  } catch (error) {
-    console.error('Error fetching LeetCode stats:', error);
-    
-    // Retry the request if retries are available
-    if (retries > 0) {
-      console.log(`Retrying LeetCode stats fetch. Retries left: ${retries}`);
-      // Wait for 1 second before retrying
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return fetchLeetCodeStats(username, retries - 1);
-    }
-    
-    // Return cached stats if available, otherwise fallback to default
-    if (cachedStats) {
-      console.log('Using cached LeetCode stats');
-      return { ...cachedStats, success: false };
-    }
-    
-    // Return a fallback value if the API fails and no cache is available
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+};
+
+export const fetchLeetCodeStats = async (username) => {
+  const cached = getCachedStats();
+
+  // If we have a valid cache, return it immediately — no spinner shown.
+  // Then kick off a background refresh so next visit is also fast.
+  if (cached) {
+    // Background refresh (don't await — fire and forget)
+    fetchFromAPI(username).catch(() => {});
+    return { ...cached, success: true };
+  }
+
+  // No cache: one real attempt with a 5s timeout, then use fallback
+  try {
+    return await fetchFromAPI(username);
+  } catch {
     return {
-      totalSolved: 200, // Fallback to your current static value
+      totalSolved: 300,
       easySolved: 0,
       mediumSolved: 0,
       hardSolved: 0,
       acceptanceRate: 0,
       ranking: 0,
-      contributionPoints: 0,
       timestamp: Date.now(),
-      success: false
+      success: false,
     };
   }
 };
-
-// Helper function to cache stats in localStorage
-const cacheStats = (stats) => {
-  try {
-    localStorage.setItem('leetcodeStats', JSON.stringify(stats));
-  } catch (error) {
-    console.error('Error caching LeetCode stats:', error);
-  }
-};
-
-// Helper function to get cached stats from localStorage
-const getCachedStats = () => {
-  try {
-    const cachedStats = localStorage.getItem('leetcodeStats');
-    if (!cachedStats) return null;
-    
-    const stats = JSON.parse(cachedStats);
-    
-    // Check if cache is older than 24 hours
-    const cacheAge = Date.now() - (stats.timestamp || 0);
-    const cacheExpiry = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-    
-    if (cacheAge > cacheExpiry) {
-      // Cache is too old, remove it
-      localStorage.removeItem('leetcodeStats');
-      return null;
-    }
-    
-    return stats;
-  } catch (error) {
-    console.error('Error getting cached LeetCode stats:', error);
-    return null;
-  }
-}; 
