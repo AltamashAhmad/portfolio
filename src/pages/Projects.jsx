@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { projects, filters } from '../data/projectsData';
 
 function Projects() {
   const [filter, setFilter] = useState('all');
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   // Function to calculate duration between two dates
   const calculateDuration = (startDate, endDate) => {
@@ -44,79 +46,19 @@ function Projects() {
     return `${formatDate(startDate)} - ${formatDate(endDate)}`;
   };
 
-  const projects = [
-    {
-      title: "Rate Limiter for API Services",
-      description: "Developed a scalable RESTful API using Node.js and Express.js to process social media data and deliver analytics insights.",
-      type: "backend",
-      tech: ["Node.js", "Express.js", "Redis", "Natural", "JWT", "RESTful API"],
-      startDate: "2023-11-01",
-      endDate: "2023-12-15",
-      image: "/projectImage/ratelimiter.png",
-      links: {
-        github: "https://github.com/AltamashAhmad/Rate_Limiter_for_API_Service",
-        live: null
-      },
-      highlights: [
-        "Designed a high-speed data storage system with Redis to efficiently store user submissions, hashtags, and sentiment",
-        "Implemented tier-based rate limiting in Redis (free/premium/standard) to control API usage and prevent abuse", 
-        "Developed an error-handling system with Winston logging, reducing debugging time by 30%",
-        "Applied Low-Level Design (LLD) principles for modular and scalable system architecture"
-      ]
-    },
-    {
-      title: "Property Listing System",
-      description: "Full-stack real estate platform with advanced search, favorites, recommendations, and Redis caching. Features JWT authentication, MongoDB integration, and comprehensive API documentation.",
-      type: "fullstack", 
-      tech: ["TypeScript", "Node.js", "MongoDB", "Redis", "JWT", "Express.js"],
-      startDate: "2024-01-01",
-      endDate: "2024-03-15",
-      image: "/projectImage/property.png",
-      links: {
-        github: "https://github.com/AltamashAhmad/Property-Listing-System",
-        live: null
-      },
-      highlights: [
-        "Built property search with 15+ filter options and pagination",
-        "Implemented favorites & recommendation system between users",
-        "Added Redis caching reducing response times by 60%",
-        "Comprehensive REST API with detailed documentation"
-      ]
-    },
-    {
-      title: "AI-Powered Peer Mock Interview Platform",
-      description: "Built a full-stack mock interview platform simulating DSA, System Design, and LLD interviews with LLMs like Ollama/OpenAI.",
-      type: "fullstack",
-      tech: ["React", "Firebase", "Ollama", "OpenAI", "Anthropic", "Node.js"],
-      startDate: "2024-06-01", 
-      endDate: "2024-08-30",
-      image: "/projectImage/Ai.png",
-      links: {
-        github: "https://github.com/AltamashAhmad/AI-CHAT-APP",
-        live: null
-      },
-      highlights: [
-        "Built React frontend with Firebase Auth and protected routes for secure user sessions and dashboard access",
-        "Designed modular LLM backend using factory pattern for easy integration of LLMs (OpenAI, Ollama, Anthropic)",
-        "Created responsive chat interface with markdown rendering, code highlighting, and real-time message sync"
-      ]
-    }
-  ];
 
-  const filters = [
-    { label: 'All', value: 'all' },
-    { label: 'Frontend', value: 'frontend' },
-    { label: 'Backend', value: 'backend' },
-    { label: 'Full Stack', value: 'fullstack' }
-  ];
 
   const filteredProjects = filter === 'all' 
     ? projects 
     : projects.filter(project => project.type === filter);
 
+  const displayedProjects = showAllProjects 
+    ? filteredProjects 
+    : filteredProjects.slice(0, 3);
+
   return (
     <section id="projects" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -152,7 +94,7 @@ function Projects() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <AnimatePresence>
-          {filteredProjects.map((project) => (
+          {displayedProjects.map((project) => (
             <motion.div
               key={project.title}
               layout
@@ -167,6 +109,8 @@ function Projects() {
                 <img 
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
                 <div className="absolute top-0 right-0 bg-primary/90 text-white px-3 py-1 text-xs font-medium">
@@ -245,6 +189,34 @@ function Projects() {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Show More/Less Button */}
+      {filteredProjects.length > 3 && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mt-12"
+        >
+          <button
+            onClick={() => {
+              if (showAllProjects) {
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }
+              setShowAllProjects(!showAllProjects);
+            }}
+            className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg flex items-center gap-2"
+          >
+            {showAllProjects ? 'Show Less Projects' : 'View All Projects'}
+            <svg 
+              className={`w-4 h-4 transition-transform duration-300 ${showAllProjects ? 'rotate-180' : ''}`} 
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </motion.div>
+      )}
       
       {/* No Projects Found Message */}
       {filteredProjects.length === 0 && (

@@ -1,299 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { 
-  FaReact, FaNodeJs, FaJava, FaDatabase, FaCode, 
-  FaServer, FaGithub, FaDocker, FaAws, FaJs, FaPython
-} from 'react-icons/fa';
-import { 
-  SiSpringboot, SiMysql, SiMongodb, SiRedis, 
-  SiTailwindcss, SiExpress, SiCplusplus, SiTypescript,
-  SiMantine, SiDirectus, SiSwagger, SiOpenai, SiSlack,
-  SiNestjs, SiPostgresql, SiFirebase, SiPrisma, SiJquery,
-  SiBootstrap, SiHtml5, SiCss3, SiJest
-} from 'react-icons/si';
-import { TbBrandNextjs } from 'react-icons/tb';
-import { BsCodeSlash, BsGearFill } from 'react-icons/bs';
+import { categories, coreSkillNames, skillsData } from '../data/skillsData';
 
 function Skills() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [showAllSkills, setShowAllSkills] = useState(false);
   
-  const categories = [
-    { id: 'all', name: 'All Skills' },
-    { id: 'languages', name: 'Languages' },
-    { id: 'frontend', name: 'Frontend' },
-    { id: 'backend', name: 'Backend' },
-    { id: 'database', name: 'Database' },
-    { id: 'devops', name: 'DevOps' },
-    { id: 'cs', name: 'Computer Science' },
-  ];
-  
-  // Define core/most important skills
-  const coreSkillNames = [
-    "JavaScript", "React", "Node.js", "Java", "MongoDB", 
-    "Express.js", "Tailwind CSS", "Git & GitHub", "Data Structures", "Algorithms"
-  ];
-  
-  const skillsData = [
-    {
-      name: "JavaScript",
-      level: 90,
-      category: "languages",
-      icon: <FaJs className="text-yellow-400" />,
-    },
-    {
-      name: "Python",
-      level: 80,
-      category: "languages",
-      icon: <FaPython className="text-blue-500" />,
-    },
-    {
-      name: "TypeScript",
-      level: 70,
-      category: "languages",
-      icon: <SiTypescript className="text-blue-500" />,
-    },
-    {
-      name: "Java",
-      level: 85,
-      category: "languages",
-      icon: <FaJava className="text-red-500" />,
-    },
-    {
-      name: "C++",
-      level: 80,
-      category: "languages",
-      icon: <SiCplusplus className="text-blue-600" />,
-    },
-    {
-      name: "React",
-      level: 90,
-      category: "frontend",
-      icon: <FaReact className="text-blue-400" />,
-    },
-    {
-      name: "Mantine UI",
-      level: 85,
-      category: "frontend",
-      icon: <SiMantine className="text-blue-600" />,
-    },
-    {
-      name: "Next.js",
-      level: 75,
-      category: "frontend",
-      icon: <TbBrandNextjs className="text-black" />,
-    },
-    {
-      name: "Tailwind CSS",
-      level: 90,
-      category: "frontend",
-      icon: <SiTailwindcss className="text-cyan-500" />,
-    },
-    {
-      name: "Node.js",
-      level: 90,
-      category: "backend",
-      icon: <FaNodeJs className="text-green-600" />,
-    },
-    {
-      name: "Express.js",
-      level: 85,
-      category: "backend",
-      icon: <SiExpress className="text-gray-600" />,
-    },
-    {
-      name: "OpenAI API",
-      level: 85,
-      category: "backend",
-      icon: <SiOpenai className="text-green-500" />,
-    },
-    {
-      name: "Slack API",
-      level: 80,
-      category: "backend",
-      icon: <SiSlack className="text-purple-600" />,
-    },
-    {
-      name: "Spring Boot",
-      level: 70,
-      category: "backend",
-      icon: <SiSpringboot className="text-green-500" />,
-    },
-    {
-      name: "MySQL",
-      level: 80,
-      category: "database",
-      icon: <SiMysql className="text-blue-800" />,
-    },
-    {
-      name: "MongoDB",
-      level: 75,
-      category: "database",
-      icon: <SiMongodb className="text-green-500" />,
-    },
-    {
-      name: "Redis",
-      level: 80,
-      category: "database",
-      icon: <SiRedis className="text-red-600" />,
-    },
-    {
-      name: "Directus CMS",
-      level: 75,
-      category: "devops",
-      icon: <SiDirectus className="text-purple-600" />,
-    },
-    {
-      name: "Git & GitHub",
-      level: 90,
-      category: "devops",
-      icon: <FaGithub className="text-gray-800" />,
-    },
-    {
-      name: "Docker",
-      level: 75,
-      category: "devops",
-      icon: <FaDocker className="text-blue-500" />,
-    },
-    {
-      name: "AWS",
-      level: 75,
-      category: "devops",
-      icon: <FaAws className="text-orange-500" />,
-    },
-    {
-      name: "Swagger",
-      level: 80,
-      category: "devops",
-      icon: <SiSwagger className="text-green-600" />,
-    },
-    {
-      name: "Data Structures",
-      level: 90,
-      category: "cs",
-      icon: <BsCodeSlash className="text-purple-600" />,
-    },
-    {
-      name: "Algorithms",
-      level: 85,
-      category: "cs",
-      icon: <FaCode className="text-indigo-600" />,
-    },
-    {
-      name: "System Design",
-      level: 80,
-      category: "cs",
-      icon: <BsGearFill className="text-gray-700" />,
-    },
-    {
-      name: "OOP",
-      level: 90,
-      category: "cs",
-      icon: <FaServer className="text-teal-600" />,
-    },
-    {
-      name: "HTML5",
-      level: 90,
-      category: "frontend",
-      icon: <SiHtml5 className="text-orange-600" />,
-    },
-    {
-      name: "CSS3",
-      level: 85,
-      category: "frontend",
-      icon: <SiCss3 className="text-blue-600" />,
-    },
-    {
-      name: "jQuery",
-      level: 70,
-      category: "frontend",
-      icon: <SiJquery className="text-blue-500" />,
-    },
-    {
-      name: "Bootstrap",
-      level: 80,
-      category: "frontend",
-      icon: <SiBootstrap className="text-purple-600" />,
-    },
-    {
-      name: "NestJS",
-      level: 80,
-      category: "backend",
-      icon: <SiNestjs className="text-red-600" />,
-    },
-    {
-      name: "REST APIs",
-      level: 90,
-      category: "backend",
-      icon: <FaServer className="text-gray-600" />,
-    },
-    {
-      name: "Prisma ORM",
-      level: 85,
-      category: "database",
-      icon: <SiPrisma className="text-blue-800" />,
-    },
-    {
-      name: "PostgreSQL",
-      level: 85,
-      category: "database",
-      icon: <SiPostgresql className="text-blue-700" />,
-    },
-    {
-      name: "Firebase",
-      level: 80,
-      category: "devops",
-      icon: <SiFirebase className="text-yellow-500" />,
-    },
-    {
-      name: "CI/CD",
-      level: 80,
-      category: "devops",
-      icon: <BsGearFill className="text-blue-500" />,
-    },
-    {
-      name: "Jest",
-      level: 75,
-      category: "devops",
-      icon: <SiJest className="text-red-700" />,
-    },
-    {
-      name: "LLMs",
-      level: 80,
-      category: "cs",
-      icon: <SiOpenai className="text-black" />,
-    },
-    {
-      name: "Microservices",
-      level: 85,
-      category: "cs",
-      icon: <FaServer className="text-blue-600" />,
-    },
-    {
-      name: "LLD",
-      level: 85,
-      category: "cs",
-      icon: <FaCode className="text-gray-800" />,
-    },
-    {
-      name: "Design Patterns",
-      level: 85,
-      category: "cs",
-      icon: <BsCodeSlash className="text-teal-600" />,
-    },
-    {
-      name: "MVC",
-      level: 85,
-      category: "cs",
-      icon: <FaServer className="text-indigo-600" />,
-    },
-    {
-      name: "OAuth2",
-      level: 80,
-      category: "cs",
-      icon: <FaDatabase className="text-gray-600" />,
-    },
-  ];
+
   
   // Filter skills based on category
   const categoryFilteredSkills = activeCategory === 'all' 
@@ -306,22 +19,9 @@ function Skills() {
     ? categoryFilteredSkills.filter(skill => coreSkillNames.includes(skill.name))
     : categoryFilteredSkills;
   
-  const getLevelColor = (level) => {
-    if (level >= 85) return 'bg-green-500';
-    if (level >= 75) return 'bg-blue-500';
-    if (level >= 65) return 'bg-yellow-500';
-    return 'bg-orange-500';
-  };
-  
-  const getLevelText = (level) => {
-    if (level >= 85) return 'Advanced';
-    if (level >= 75) return 'Proficient';
-    if (level >= 65) return 'Intermediate';
-    return 'Beginner';
-  };
 
   return (
-    <section id="skills" className="py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
+    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -353,38 +53,27 @@ function Skills() {
         </div>
 
         {/* Skills Grid - Mobile: 2 per row, Desktop: 3-4 per row */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 max-w-7xl mx-auto">
           <AnimatePresence mode="popLayout">
           {filteredSkills.map((skill, index) => (
             <motion.div
               key={skill.name}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.25, delay: Math.min(index * 0.03, 0.35) }}
-              whileHover={{ y: -4, transition: { duration: 0.15 } }}
-              className="bg-white dark:bg-gray-700 rounded-lg shadow-md dark:shadow-gray-600 p-3 sm:p-5 hover:shadow-lg dark:hover:shadow-gray-500 transition-shadow border border-gray-100 dark:border-gray-600"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.3) }}
+              whileHover={{ y: -5, scale: 1.03, transition: { duration: 0.2 } }}
+              className="group relative flex flex-col items-center justify-center bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-xl p-5 sm:p-6 transition-all border border-gray-100 dark:border-gray-700/50 overflow-hidden"
             >
-              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                <div className="text-xl sm:text-2xl">{skill.icon}</div>
-                <h3 className="text-sm sm:text-lg font-medium text-gray-800 dark:text-white leading-tight">{skill.name}</h3>
-              </div>
+              {/* Background glowing effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
-              <div className="mt-1 sm:mt-2">
-                <div className="flex justify-between mb-1 sm:mb-1.5 text-xs sm:text-sm">
-                  <span className={`px-1.5 sm:px-2 py-0.5 rounded-full text-white text-xs ${getLevelColor(skill.level)}`}>
-                    {getLevelText(skill.level)}
-                  </span>
-                  <span className="text-gray-500 dark:text-gray-400 font-medium text-xs sm:text-sm">{skill.level}%</span>
+              <div className="relative z-10 flex flex-col items-center gap-3">
+                <div className="text-4xl sm:text-5xl p-3 sm:p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 group-hover:scale-110 transition-transform duration-300 ease-out shadow-sm dark:shadow-none">
+                  {skill.icon}
                 </div>
-                <div className="h-1.5 sm:h-2 bg-gray-100 dark:bg-gray-600 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: Math.min(index * 0.02, 0.25) }}
-                    className={`h-full rounded-full ${getLevelColor(skill.level)}`}
-                  />
+                <div className="text-center">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100">{skill.name}</h3>
                 </div>
               </div>
             </motion.div>
@@ -401,7 +90,12 @@ function Skills() {
             className="flex justify-center mt-8"
           >
             <button
-              onClick={() => setShowAllSkills(!showAllSkills)}
+              onClick={() => {
+                if (showAllSkills) {
+                  document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+                }
+                setShowAllSkills(!showAllSkills);
+              }}
               className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg flex items-center gap-2"
             >
               {showAllSkills ? (

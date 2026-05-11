@@ -9,6 +9,7 @@ function Navbar() {
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -87,6 +88,7 @@ function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle mobile menu"
               className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary focus:outline-none"
             >
               <svg

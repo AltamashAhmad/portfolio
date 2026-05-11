@@ -1,74 +1,9 @@
 import { motion } from 'framer-motion';
 import { FaGraduationCap, FaBriefcase, FaAward } from 'react-icons/fa';
 import { HiOutlineDocumentText } from 'react-icons/hi';
+import { education, experience } from '../data/aboutData';
 
 function About() {
-  const education = [
-    {
-      degree: "B.Tech, Electrical Engineering",
-      institution: "Jamia Millia Islamia (NewDelhi), India",
-      year: "2020-2024",
-      score: "8.71/10.0 CGPA",
-    }
-  ];
-
-  const experience = [
-    {
-      role: "Full Stack Software Developer",
-      company: "Zylo",
-      startDate: new Date(2025, 8, 1), // September 2025
-      endDate: null, // Present
-      points: [
-        "Co-architected ERP using NestJS and PostgreSQL (Prisma) with Resource, Catalog, Scheduling, Orders, and Audit modules",
-        "Engineered a consecutive-window scheduling algorithm with PostgreSQL pessimistic locking and 15-minute TTL soft reservations to prevent race conditions across concurrent bookings",
-        "Integrated external Aldar APIs for real-time synchronization of installation and order status within the ERP ecosystem",
-        "Implemented an 8-state Order State Machine (DRAFT → CONFIRMED → COMPLETED) with backend-enforced transitions, price snapshots frozen at payment confirmation, and an immutable AuditLog for every status change",
-        "Architected and launched zylosmart.com from scratch using Next.js 14 and Tailwind CSS, delivering 15+ pages across 10 smart home solution categories with full production deployment (DNS, SSL, CDN)"
-      ],
-      technologies: ["NestJS", "PostgreSQL", "Prisma", "Next.js", "Tailwind CSS", "REST APIs", "State Machine"]
-    },
-    {
-      role: "Full Stack Software Developer",
-      company: "Ekai",
-      startDate: new Date(2024, 5, 1), // June 2024
-      endDate: new Date(2025, 7, 1), // August 2025
-      points: [
-        "Built Ekai, a Slack LLM bot integrating OpenAI API for contextual chat, document-based training, user-level privacy controls",
-        "Built backend/frontend with Node and Block Kit Builder for file upload and user actions, enabling smooth interaction",
-        "Added privacy control, letting users train Ekai for personal or team use, improving data privacy and collaboration",
-        "Formatted AI responses into Slack markdown for clean display of code, links, and text, improving message clarity and UX",
-        "Implemented OAuth + JWT authentication, encrypted storage, and CI/CD pipelines with GitHub Actions + AWS",
-        "Integrated Drive & Calendar APIs for folder training, auto-ingestion, and meeting-based access with Slack notifications"
-      ],
-      technologies: ["Node.js", "OpenAI API", "Slack API", "JWT", "OAuth", "AWS", "GitHub Actions", "CI/CD"]
-    },
-    {
-      role: "Software Developer Intern",
-      company: "Quvor",
-      startDate: new Date(2023, 6, 1), // July 2023
-      endDate: new Date(2024, 2, 1), // March 2024
-      points: [
-        "Developed an e-commerce platform for ShoppingEventVIP (shoppingeventvip.be/en) using React Router v7 and Mantine UI",
-        "Engineered high-converting landing pages with Directus CMS integration, featuring dynamic hero sections, testimonial carousels, partner brand showcases, and tiered pricing plans",
-        "Built 40+ reusable Mantine-first components and optimized frontend performance, reducing page load times by 60%",
-        "Implemented Redis caching layer, cutting API response times by 40% and scaling to support 10,000+ concurrent users",
-        "Implemented (i18n) with multilingual routing (EN/FR/NL) and CMS-based translated content for global reach"
-      ],
-      technologies: ["React Router v7", "Mantine UI", "Directus CMS", "Redis", "i18n"]
-    },
-    {
-      role: "Software Developer Intern",
-      company: "Kalvium",
-      startDate: new Date(2022, 11, 1), // December 2022
-      endDate: new Date(2023, 2, 1), // March 2023
-      points: [
-        "Developed LiveBook, an interactive learning platform integrating theory, videos, and assessments for student engagement",
-        "Built RESTful APIs for content management and integrated YouTube API for in-app video streaming",
-        "Created comprehensive Postman test suites improving system reliability and developer onboarding efficiency"
-      ],
-      technologies: ["React.js", "Node.js", "YouTube API", "RESTful APIs", "Postman"]
-    },
-  ];
 
   // Function to calculate duration between two dates
   const calculateDuration = (startDate, endDate) => {
@@ -106,7 +41,7 @@ function About() {
 
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -132,46 +67,56 @@ function About() {
             Experience
           </h2>
         </div>
-        <div className="space-y-4">
+        <div className="relative border-l-2 border-gray-200 dark:border-gray-700 ml-3 md:ml-4 space-y-8 mt-6">
           {experience.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 + index * 0.1 }}
-              className="bg-white dark:bg-gray-700 rounded-lg shadow-sm dark:shadow-gray-600 p-4 hover:shadow-md dark:hover:shadow-gray-500 transition-all border border-gray-100 dark:border-gray-600"
+              className="relative pl-6 md:pl-8 group"
             >
-              <div className="flex flex-wrap justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-lg font-bold text-primary">{exp.role}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{exp.company}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
-                  </p>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">
-                    ({calculateDuration(exp.startDate, exp.endDate)})
-                  </p>
-                </div>
-              </div>
-              <ul className="space-y-1 mb-3 text-sm">
-                {exp.points.map((point, idx) => (
-                  <li key={idx} className="flex items-start text-gray-600 dark:text-gray-300">
-                    <span className="text-primary mr-2 mt-1">•</span>
-                    <span className="flex-1">{point}</span>
-                  </li>
-                ))}
-              </ul>
-              {exp.technologies && (
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {exp.technologies.map((tech, idx) => (
-                    <span key={idx} className="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs">
-                      {tech}
+              {/* Timeline Dot */}
+              <div className="absolute -left-[9px] top-2 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-gray-800 shadow-sm group-hover:scale-125 transition-transform duration-300"></div>
+              
+              {/* Content Card */}
+              <div className="bg-white dark:bg-gray-800/80 rounded-xl shadow-sm hover:shadow-lg dark:shadow-gray-700 p-5 md:p-6 transition-all border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div className="relative z-10 flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-2">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">{exp.role}</h3>
+                    <p className="text-primary font-medium text-base mt-1">{exp.company}</p>
+                  </div>
+                  <div className="text-left md:text-right flex flex-col md:items-end">
+                    <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-semibold tracking-wider uppercase rounded-full mb-1">
+                      {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
                     </span>
-                  ))}
+                    <p className="text-gray-500 dark:text-gray-400 text-xs font-medium pl-1 md:pl-0">
+                      {calculateDuration(exp.startDate, exp.endDate)}
+                    </p>
+                  </div>
                 </div>
-              )}
+                
+                <ul className="relative z-10 space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300">
+                  {exp.points.map((point, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <span className="text-primary mr-2.5 mt-1 opacity-70">▹</span>
+                      <span className="flex-1 leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                {exp.technologies && (
+                  <div className="relative z-10 flex flex-wrap gap-2 mt-5">
+                    {exp.technologies.map((tech, idx) => (
+                      <span key={idx} className="px-3 py-1 bg-gray-50 dark:bg-gray-900/50 text-gray-700 dark:text-gray-200 rounded-full text-[11px] font-medium border border-gray-200 dark:border-gray-600 hover:border-primary/50 transition-colors">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>

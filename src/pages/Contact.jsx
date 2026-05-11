@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { contactInfo } from '../data/contactData';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -49,40 +50,11 @@ function Contact() {
     }));
   };
 
-  const contactInfo = [
-    {
-      title: "Email",
-      value: "altamashahmadajaz2@gmail.com",
-      link: "mailto:altamashahmadajaz2@gmail.com",
-      icon: "📧",
-      description: "Best for detailed discussions"
-    },
-    {
-      title: "WhatsApp",
-      value: "+971 568408658",
-      link: "https://wa.me/971568408658?text=Hi%20Altamash!%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20opportunities.",
-      icon: "💬",
-      description: "Quick chat & instant response"
-    },
-    {
-      title: "LinkedIn",
-      value: "Connect with me",
-      link: "https://www.linkedin.com/in/altamash9648/",
-      icon: "💼",
-      description: "Professional networking"
-    },
-    {
-      title: "GitHub",
-      value: "View my code",
-      link: "https://github.com/AltamashAhmad",
-      icon: "💻",
-      description: "Explore my repositories"
-    }
-  ];
+
 
   return (
-    <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
-      <div className="max-w-6xl mx-auto px-4 py-12">
+    <section id="contact" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-200">
+      <div className="max-w-6xl mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -95,6 +67,23 @@ function Contact() {
         </p>
       </motion.div>
 
+      {/* Status Banner */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+      >
+        <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 px-6 py-3 rounded-full border border-purple-200 dark:border-purple-800 flex items-center gap-2 justify-center shadow-sm">
+          <span className="text-lg">⚡</span>
+          <span className="font-medium text-gray-800 dark:text-gray-200 text-sm">Responds within 24 hours</span>
+        </div>
+        <div className="bg-green-50 dark:bg-green-900/20 px-6 py-3 rounded-full border border-green-200 dark:border-green-800 flex items-center gap-2 justify-center shadow-sm">
+          <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
+          <span className="font-medium text-gray-800 dark:text-gray-200 text-sm">Open to full-time roles</span>
+        </div>
+      </motion.div>
+
       <div className="grid md:grid-cols-2 gap-12">
         {/* Contact Form */}
         <motion.div
@@ -102,7 +91,7 @@ function Contact() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 md:p-10 w-full max-w-2xl transition-colors duration-200">
+          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-5 sm:p-8 md:p-10 w-full max-w-2xl transition-colors duration-200">
             <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Send Me a Message</h3>
             
             {status === 'sent' ? (
@@ -137,7 +126,7 @@ function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                    placeholder="John Doe"
+                    placeholder="Enter your name"
                   />
                 </div>
                 
@@ -202,7 +191,7 @@ function Contact() {
           transition={{ delay: 0.4 }}
           className="space-y-6"
         >
-          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 transition-colors duration-200">
+          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-5 sm:p-8 transition-colors duration-200">
             <h2 className="text-2xl font-heading font-bold mb-6 text-gray-800 dark:text-white">
               Quick Contact Options
             </h2>
@@ -213,19 +202,20 @@ function Contact() {
                   href={info.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={info.title}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-purple-400 hover:shadow-md transition-all duration-300 group bg-white dark:bg-gray-800"
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-purple-400 hover:shadow-md transition-all duration-300 group bg-white dark:bg-gray-800"
                 >
-                  <div className="text-2xl bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg group-hover:bg-purple-100 dark:group-hover:bg-purple-800/50 transition-colors">
+                  <div className="text-xl sm:text-2xl bg-purple-50 dark:bg-purple-900/30 p-2.5 sm:p-3 rounded-lg group-hover:bg-purple-100 dark:group-hover:bg-purple-800/50 transition-colors flex-shrink-0">
                     {info.icon}
                   </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors truncate">
                       {info.title}
                     </p>
-                    <p className="text-sm text-purple-600 dark:text-purple-400 mb-1">{info.description}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{info.value}</p>
+                    <p className="text-[11px] sm:text-sm text-purple-600 dark:text-purple-400 mb-0.5 sm:mb-1 truncate">{info.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 break-all sm:break-normal truncate sm:truncate-none">{info.value}</p>
                   </div>
                   <svg 
                     className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" 
@@ -240,33 +230,7 @@ function Contact() {
             </div>
           </div>
 
-          {/* Response Time Info */}
-          <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800 transition-colors duration-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="text-2xl">⚡</div>
-              <h3 className="font-heading font-bold text-gray-800 dark:text-white">
-                Fast Response Guaranteed
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              I respond to all messages within 24 hours. For urgent opportunities, 
-              WhatsApp is the fastest way to reach me directly.
-            </p>
-          </div>
 
-          {/* Availability Status */}
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800 transition-colors duration-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <h3 className="font-heading font-bold text-gray-800 dark:text-white">
-                Currently Available
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              Open to full-time software development opportunities. 
-              Ready to start immediately and contribute to your team's success!
-            </p>
-          </div>
         </motion.div>
       </div>
       </div>

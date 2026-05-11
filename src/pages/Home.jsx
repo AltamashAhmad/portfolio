@@ -4,10 +4,10 @@ import { fetchLeetCodeStats } from '../utils/leetcodeStats';
 import { fetchGitHubStats } from '../utils/githubStats';
 
 // Animated count-up number — starts from 0, smoothly counts to target
-function CountUp({ target, duration = 1.2 }) {
+function CountUp({ target, duration = 1.2, decimals = 0 }) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.floor(v));
-  const [display, setDisplay] = useState(0);
+  const rounded = useTransform(count, (v) => Number(v).toFixed(decimals));
+  const [display, setDisplay] = useState((0).toFixed(decimals));
 
   useEffect(() => {
     const controls = animate(count, target, {
@@ -60,7 +60,9 @@ function Home() {
           loading: false,
           success: stats.success
         });
-      } catch {}
+      } catch (error) {
+        console.error("Failed to fetch LeetCode stats:", error);
+      }
     };
     getLeetCodeStats();
   }, []);
@@ -76,7 +78,9 @@ function Home() {
           loading: false,
           success: stats.success
         });
-      } catch {}
+      } catch (error) {
+        console.error("Failed to fetch GitHub stats:", error);
+      }
     };
     getGitHubStats();
   }, []);
@@ -219,7 +223,7 @@ function Home() {
               >
                 <div className="text-center p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg dark:shadow-gray-700 transition-all duration-200">
                   <h3 className="text-3xl font-bold text-primary">
-                    <CountUp target={calculateTotalExperience} duration={1} />
+                    <CountUp target={calculateTotalExperience} duration={1} decimals={1} />
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm">Years Experience</p>
                 </div>
@@ -267,6 +271,8 @@ function Home() {
                 <img
                   src="/profile.jpg"
                   alt="Altamash Ahmad"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
